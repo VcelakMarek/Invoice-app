@@ -1,3 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --purple: #7c5dfa;
+  --purple-hover: #9277ff;
+  --red: #ec5757;
+  --red-hover: #ff9797;
+  --dark-blue: #1e2139;
+  --blue: #373b53;
+  /* --blue: #252945; */
+  --light-blue: #7e88c3;
+  --light-grey: #dfe3fa;
+  --grey: #888eb0;
+  --black: #0c0e16;
+  --black2: #141625;
+  --light-bg: #f8f8fb;
+
+  font-family: Spartan;
+}
