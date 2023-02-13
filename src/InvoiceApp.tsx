@@ -28,6 +28,18 @@ const InvoiceApp = () => {
           />
         </div>
       </nav>
+      <header className="mt-16 flex w-screen flex-row items-start justify-around">
+        <div>
+          <h1 className="text-4xl font-bold text-black">Invoices</h1>
+          <h2 className="text-xs font-medium text-grey">
+            There are 7{/*{numberOfInvoices}*/} total invoices
+          </h2>
+        </div>
+        <div className="flex gap-10">
+          <Button dropDown>Filter by status</Button>
+          <Button invoice>New Invoice</Button>
+        </div>
+      </header>
     </main>
   );
 };
