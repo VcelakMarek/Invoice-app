@@ -1,9 +1,11 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 type Props = {
   color?: "red" | "purple" | "grey";
-  rounded?: boolean;
   children?: ReactNode;
+  dropDown?: boolean;
+  onCLick?: () => void;
+  invoice?: boolean;
 };
 
 const backgroundColor = {
@@ -18,17 +20,70 @@ const textColor = {
   grey: "light-blue",
 };
 
-const Button = ({ color = "purple", rounded, children }: Props) => {
-  const border = rounded ? "rounded-full" : null;
-  const dimensions = "h-12 pl-6 pr-6";
+const Button = ({
+  color = "purple",
+  dropDown,
+  onCLick,
+  invoice,
+  children,
+}: Props) => {
+  const [arrowDown, setArrowDown] = useState(true);
+
+  const border = !dropDown ? "rounded-full" : null;
+  const dimensions = `h-12 ${invoice ? "pl-2" : "pl-6"} pr-6`;
+  const text = "font-bold text-xs tracking-[1px]";
+  const flex = "flex items-center gap-4";
 
   const baseClasses = [
     backgroundColor[color],
     textColor[color],
     border,
     dimensions,
+    text,
   ];
-  return <button className={baseClasses.join(" ")}>{children}</button>;
+
+  const dropDownClasses = [text, flex];
+  const invoiceClasses = baseClasses.concat(flex);
+
+  if (dropDown) {
+    return (
+      <button
+        className={dropDownClasses.join(" ")}
+        onClick={() => {
+          {
+            setArrowDown(!arrowDown);
+          }
+          onCLick;
+        }}
+      >
+        {children}
+        <img
+          className={!arrowDown ? "rotate-180 duration-500" : "duration-500"}
+          src="/Invoice_app/assets/icon-arrow-down.svg"
+          alt="arrow-down"
+        ></img>
+      </button>
+    );
+  } else if (invoice) {
+    return (
+      <button className={invoiceClasses.join(" ")} onClick={onCLick}>
+        <div className="grid h-8 w-8 place-items-center rounded-full bg-white">
+          <img
+            className="pl-px pt-px"
+            src="/Invoice_app/assets/icon-plus.svg"
+            alt="plus"
+          ></img>
+        </div>
+        {children}
+      </button>
+    );
+  } else {
+    return (
+      <button className={baseClasses.join(" ")} onClick={onCLick}>
+        {children}
+      </button>
+    );
+  }
 };
 
 export default Button;
