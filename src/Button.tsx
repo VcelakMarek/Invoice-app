@@ -1,4 +1,5 @@
 import { ReactNode, useState } from "react";
+import DropDownMenu from "./DropDownMenu";
 
 type Props = {
   color?: "red" | "purple" | "grey";
@@ -6,6 +7,7 @@ type Props = {
   dropDown?: boolean;
   onCLick?: () => void;
   invoice?: boolean;
+  DropDownMenu?: ReactNode;
 };
 
 const backgroundColor = {
@@ -47,22 +49,25 @@ const Button = ({
 
   if (dropDown) {
     return (
-      <button
-        className={dropDownClasses.join(" ")}
-        onClick={() => {
-          {
-            setArrowDown(!arrowDown);
-          }
-          onCLick;
-        }}
-      >
-        {children}
-        <img
-          className={!arrowDown ? "rotate-180 duration-500" : "duration-500"}
-          src="/Invoice_app/assets/icon-arrow-down.svg"
-          alt="arrow-down"
-        ></img>
-      </button>
+      <>
+        <button
+          className={dropDownClasses.join(" ")}
+          onClick={() => {
+            {
+              setArrowDown(!arrowDown);
+            }
+            onCLick;
+          }}
+        >
+          {children}
+          <img
+            className={!arrowDown ? "rotate-180 duration-500" : "duration-500"}
+            src="/Invoice_app/assets/icon-arrow-down.svg"
+            alt="arrow-down"
+          ></img>
+        </button>
+        {/* {!arrowDown && <DropDownMenu></DropDownMenu>} */}
+      </>
     );
   } else if (invoice) {
     return (
