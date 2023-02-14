@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500&display=swap");
 @tailwind base;
+h1 {
+  @apply text-4xl font-bold text-black;
+}
+h2 {
+  @apply text-xs font-medium text-grey;
+}
+h3 {
+  @apply text-xs font-bold text-black;
+}
+h4 {
+  @apply text-base font-bold text-black;
+}
 @tailwind components;
 @tailwind utilities;
 
