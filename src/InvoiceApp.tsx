@@ -1,8 +1,19 @@
+import { useEffect, useState } from "react";
 import Button from "./Button";
+import { fetchOnLoadData } from "./fetchOnLoadData";
+import Invoice from "./Invoice";
 
 const InvoiceApp = () => {
+  const [invoices, setInvoices] = useState<unknown[]>([]);
+
+  useEffect(() => {
+    fetchOnLoadData(setInvoices);
+  }, []);
+
+  console.log(invoices);
+
   return (
-    <main className="flex bg-light-bg">
+    <div className="flex w-screen bg-light-bg">
       <nav className="flex h-screen w-[103px] flex-col justify-between rounded-tr-[20px] rounded-br-[20px] bg-blue">
         <div className="relative z-10 h-[103px] w-[103px] rounded-tr-[20px] rounded-br-[20px] bg-purple">
           <img
@@ -28,19 +39,22 @@ const InvoiceApp = () => {
           />
         </div>
       </nav>
-      <header className="mt-16 flex w-screen flex-row items-start justify-around">
-        <div>
-          <h1 className="text-4xl font-bold text-black">Invoices</h1>
-          <h2 className="text-xs font-medium text-grey">
-            There are 7{/*{numberOfInvoices}*/} total invoices
-          </h2>
+      <main className="flex w-screen flex-col">
+        <header className="mt-16 flex h-14 flex-row items-start justify-around">
+          <div>
+            <h1>Invoices</h1>
+            <h2>There are {invoices.length} total invoices</h2>
+          </div>
+          <div className="flex gap-10">
+            <Button dropDown>Filter by status</Button>
+            <Button invoice>New Invoice</Button>
+          </div>
+        </header>
+        <div className="grid place-items-center ">
+          <Invoice></Invoice>
         </div>
-        <div className="flex gap-10">
-          <Button dropDown>Filter by status</Button>
-          <Button invoice>New Invoice</Button>
-        </div>
-      </header>
-    </main>
+      </main>
+    </div>
   );
 };
 
