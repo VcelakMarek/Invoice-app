@@ -2,19 +2,18 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import { fetchOnLoadData } from "./fetchOnLoadData";
 import Invoice from "./Invoice";
+import { InvoiceTypes } from "./types/invoiceTypes";
 
 const InvoiceApp = () => {
-  const [invoices, setInvoices] = useState<unknown[]>([]);
+  const [invoices, setInvoices] = useState<InvoiceTypes[]>([]);
 
   useEffect(() => {
     fetchOnLoadData(setInvoices);
   }, []);
 
-  console.log(invoices);
-
   return (
     <div className="flex w-screen bg-light-bg">
-      <nav className="flex h-screen w-[103px] flex-col justify-between rounded-tr-[20px] rounded-br-[20px] bg-blue">
+      <nav className="fixed flex h-screen w-[103px] flex-col justify-between rounded-tr-[20px] rounded-br-[20px] bg-blue">
         <div className="relative z-10 h-[103px] w-[103px] rounded-tr-[20px] rounded-br-[20px] bg-purple">
           <img
             className="absolute top-8 left-8 z-30 w-10"
@@ -40,7 +39,7 @@ const InvoiceApp = () => {
         </div>
       </nav>
       <main className="flex w-screen flex-col">
-        <header className="mt-16 flex h-14 flex-row items-start justify-around">
+        <header className="w-800px mt-16 flex h-14 flex-row items-start justify-around">
           <div>
             <h1>Invoices</h1>
             <h2>There are {invoices.length} total invoices</h2>
@@ -50,8 +49,17 @@ const InvoiceApp = () => {
             <Button invoice>New Invoice</Button>
           </div>
         </header>
-        <div className="grid place-items-center ">
-          <Invoice></Invoice>
+        <div className="mt-16 grid place-items-center">
+          {invoices.map((invoice) => (
+            <Invoice
+              id={invoice.id}
+              paymentDue={invoice.paymentDue}
+              clientName={invoice.clientName}
+              total={invoice.total}
+              status={invoice.status}
+              key={invoice.id}
+            ></Invoice>
+          ))}
         </div>
       </main>
     </div>
