@@ -29,7 +29,7 @@ const Button = ({
   invoice,
   children,
 }: Props) => {
-  const [arrowDown, setArrowDown] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const border = !dropDown ? "rounded-full" : null;
   const dimensions = `h-12 ${invoice ? "pl-2" : "pl-6"} pr-6`;
@@ -44,7 +44,7 @@ const Button = ({
     text,
   ];
 
-  const dropDownClasses = [text, flex];
+  const dropDownClasses = [text, flex, "relative"];
   const invoiceClasses = baseClasses.concat(flex);
 
   if (dropDown) {
@@ -53,20 +53,19 @@ const Button = ({
         <button
           className={dropDownClasses.join(" ")}
           onClick={() => {
-            {
-              setArrowDown(!arrowDown);
-            }
-            onCLick;
+            setIsOpen(!isOpen);
           }}
         >
           {children}
           <img
-            className={!arrowDown ? "rotate-180 duration-500" : "duration-500"}
+            className={isOpen ? "rotate-180 duration-500" : "duration-500"}
             src="/Invoice_app/assets/icon-arrow-down.svg"
             alt="arrow-down"
           ></img>
         </button>
-        {/* {!arrowDown && <DropDownMenu></DropDownMenu>} */}
+        {isOpen && (
+          <DropDownMenu options={["Draft", "Pendind", "Paid"]}></DropDownMenu>
+        )}
       </>
     );
   } else if (invoice) {
