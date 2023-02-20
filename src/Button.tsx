@@ -47,6 +47,8 @@ const Button = ({
   const dropDownClasses = [text, flex, "relative"];
   const invoiceClasses = baseClasses.concat(flex);
 
+  const options = ["Draft", "Pendind", "Paid"];
+
   if (dropDown) {
     return (
       <>
@@ -63,9 +65,7 @@ const Button = ({
             alt="arrow-down"
           ></img>
         </button>
-        {isOpen && (
-          <DropDownMenu options={["Draft", "Pendind", "Paid"]}></DropDownMenu>
-        )}
+        {isOpen && <DropDownMenu options={options}></DropDownMenu>}
       </>
     );
   } else if (invoice) {
