@@ -1,28 +1,36 @@
-const DropDownMenu = (options: any) => {
+type Props = {
+  options: string[];
+};
+
+const DropDownMenu = ({ options }: Props) => {
   return (
-    <div className="absolute right-[340px] top-28 h-32 w-48 rounded-lg bg-[#FFF]">
+    <div className="absolute right-[340px] top-28 z-10 h-32 w-48 rounded-lg bg-[#FFF] drop-shadow-lg">
       {options.map((option) => (
-        <div key={option}>
-          <input id={option} type="checkbox"></input>
-          <label htmlFor={option}>{option}</label>
+        <div className="ml-6 first:mt-6 last:mb-6" key={option}>
+          <div className="flex">
+            <input
+              id={option}
+              type="checkbox"
+              className="mr-3 mb-2 h-4 w-4 border border-purple bg-purple"
+            />
+            {/* <img
+              className="text-blue-600 h-3 w-3 fill-current"
+              src="/Invoice_app/assets/icon-check.svg"
+              alt="icon-check"
+            /> */}
+
+            <div className="mb-2">
+              <label
+                htmlFor={option}
+                className="text-center text-xs font-bold tracking-wider text-black"
+              >
+                {option}
+              </label>
+            </div>
+          </div>
         </div>
       ))}
     </div>
-
-    // <div className="absolute right-[340px] top-28 h-32 w-48 rounded-lg bg-[#FFF]">
-    //   <div>
-    //     <input id="draft" type="checkbox"></input>
-    //     <label htmlFor="draft">Draft</label>
-    //   </div>
-    //   <div>
-    //     <input id="pending" type="checkbox"></input>
-    //     <label htmlFor="pending">Pending</label>
-    //   </div>
-    //   <div>
-    //     <input id="paid" type="checkbox"></input>
-    //     <label htmlFor="paid">Paid</label>
-    //   </div>
-    // </div>
   );
 };
 
