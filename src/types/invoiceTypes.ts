@@ -13,16 +13,16 @@ export interface Item {
 }
 
 export interface InvoiceTypes {
-  id: string;
+  id?: string;
   createdAt?: string;
-  paymentDue: string;
+  paymentDue?: string;
   description?: string;
   paymentTerms?: number;
-  clientName: string;
+  clientName?: string;
   clientEmail?: string;
   status: string;
   senderAddress?: Address;
   clientAddress?: Address;
   items?: Item[];
-  total: number;
+  total?: number;
 }
