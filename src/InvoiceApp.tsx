@@ -28,10 +28,15 @@ const InvoiceApp = () => {
           {invoices.map((invoice) => (
             <Invoice
               id={invoice.id}
+              createdAt={invoice.createdAt}
               paymentDue={invoice.paymentDue}
+              description={invoice.description}
+              paymentTerms={invoice.paymentTerms}
               clientName={invoice.clientName}
-              total={invoice.total}
+              clientEmail={invoice.clientEmail}
               status={invoice.status}
+              senderAddress={invoice.senderAddress}
+              total={invoice.total}
               key={invoice.id}
             ></Invoice>
           ))}
