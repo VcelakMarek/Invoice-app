@@ -6,6 +6,7 @@ import { InvoiceTypes } from "./types/invoiceTypes";
 
 const InvoiceApp = () => {
   const [invoices, setInvoices] = useState<InvoiceTypes[]>([]);
+  const [showModal, setShowmodal] = useState(false);
 
   useEffect(() => {
     fetchOnLoadData(setInvoices);
@@ -21,7 +22,14 @@ const InvoiceApp = () => {
           </div>
           <div className="flex gap-10">
             <Button dropDown>Filter by status</Button>
-            <Button invoice>New Invoice</Button>
+            <Button
+              invoice
+              onCLick={() => {
+                setShowmodal(true);
+              }}
+            >
+              New Invoice
+            </Button>
           </div>
         </header>
         <div className="mt-16 grid place-items-center">
@@ -36,11 +44,14 @@ const InvoiceApp = () => {
               clientEmail={invoice.clientEmail}
               status={invoice.status}
               senderAddress={invoice.senderAddress}
+              clientAddress={invoice.clientAddress}
+              items={invoice.items}
               total={invoice.total}
               key={invoice.id}
             ></Invoice>
           ))}
         </div>
+        {showModal && <Invoice newInvoice />}
       </main>
     </div>
   );
