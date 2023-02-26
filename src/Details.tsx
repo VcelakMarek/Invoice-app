@@ -32,6 +32,8 @@ const Details = () => {
         clientEmail={invoiceData.clientEmail}
         status={invoiceData.status}
         senderAddress={invoiceData.senderAddress}
+        clientAddress={invoiceData.clientAddress}
+        items={invoiceData.items}
         total={invoiceData.total}
       ></Invoice>
     </div>
