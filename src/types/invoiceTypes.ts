@@ -20,7 +20,7 @@ export interface InvoiceTypes {
   paymentTerms?: number;
   clientName?: string;
   clientEmail?: string;
-  status: string;
+  status?: string;
   senderAddress?: Address;
   clientAddress?: Address;
   items?: Item[];
