@@ -15,9 +15,11 @@ h4 {
 h5 {
   @apply mt-10 text-xs font-bold text-purple;
 }
-input[type="text"] {
+input,
+select {
   @apply mt-2.5 mb-5 h-[48px] rounded-md border-2 px-5 text-sm font-bold text-black outline-purple active:border-purple;
 }
+
 @tailwind components;
 @tailwind utilities;
 
