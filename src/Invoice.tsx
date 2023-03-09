@@ -4,6 +4,7 @@ import Status from "./Status";
 import ItemList from "./ItemList";
 import Modal from "./Modal";
 import FormInput from "./FormInput";
+import Button from "./Button";
 
 type Props = {
   details?: boolean;
@@ -58,9 +59,9 @@ const Invoice = ({ details, newInvoice, ...props }: Props) => {
     return (
       <Modal>
         <div className="absolute z-10 h-screen w-screen bg-neutral-900/40">
-          <div className="fixed h-screen w-[719px] overflow-auto bg-white pl-40 pt-14 pr-14">
+          <div className="fixed h-screen w-[719px] overflow-auto bg-white pb-28 pl-40 pt-14 pr-14">
             <h1>New Invoice</h1>
-            <form>
+            <form id="newInvoice">
               <h5 className="mb-4">Bill From</h5>
 
               <FormInput
@@ -69,15 +70,15 @@ const Invoice = ({ details, newInvoice, ...props }: Props) => {
               />
 
               <div className="flex justify-between">
-                <FormInput inputName="City" size="small" customId="fromCity" />
+                <FormInput inputName="City" size="l" customId="fromCity" />
                 <FormInput
                   inputName="Post Code"
-                  size="small"
+                  size="l"
                   customId="fromPostCode"
                 />
                 <FormInput
                   inputName="Country"
-                  size="small"
+                  size="l"
                   customId="fromCountry"
                 />
               </div>
@@ -92,20 +93,41 @@ const Invoice = ({ details, newInvoice, ...props }: Props) => {
               />
 
               <div className="flex justify-between">
-                <FormInput inputName="City" size="small" customId="toCity" />
+                <FormInput inputName="City" size="l" customId="toCity" />
                 <FormInput
                   inputName="Post Code"
-                  size="small"
+                  size="l"
                   customId="toPostCode"
                 />
+                <FormInput inputName="Country" size="l" customId="toCountry" />
+              </div>
+              <div className="flex justify-between">
+                <FormInput inputName="Issue Date" size="xl" inputType="date" />
+
                 <FormInput
-                  inputName="Country"
-                  size="small"
-                  customId="toCountry"
-                />
+                  inputName="Payment Terms"
+                  size="xl"
+                  inputType="select"
+                  selectValues={[
+                    "Net 1 Day",
+                    "Net 7 Days",
+                    "Net 14 Days",
+                    "Net 30 Days",
+                  ]}
+                ></FormInput>
+              </div>
+              <FormInput inputName="Project Description" />
+
+              <ItemList edit />
+
+              <div className="fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center justify-around bg-white shadow-inner shadow-slate-900">
+                <Button color="grey">Discard</Button>
+                <div className="flex gap-2">
+                  <Button color="darkBlue">Save as Draft</Button>
+                  <Button color="purple">Save & Send</Button>
+                </div>
               </div>
             </form>
-            <div className="fixed bottom-0 left-[103px] h-28 w-[616px] bg-green-500"></div>
           </div>
         </div>
       </Modal>
