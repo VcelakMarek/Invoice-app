@@ -1,24 +1,29 @@
 type Props = {
-  size?: "small" | "medium" | "large";
+  size?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
   inputName: string;
   customId?: string;
-  inputType?: "text" | "date" | "select";
+  inputType?: "text" | "date" | "select" | "number";
   selectValues?: string[];
+  withoutHeading?: boolean;
   // inputSize: { [key: string]: string };
 };
 
 const inputSize: { [key: string]: string } = {
-  small: "w-[152px]",
-  medium: "w-[240px]",
-  large: "w-[504px]",
+  xs: "w-[46px]",
+  s: "w-[100px]",
+  m: "w-[214px]",
+  l: "w-[152px]",
+  xl: "w-[240px]",
+  xxl: "w-[504px]",
 };
 
 const FormInput = ({
-  size = "large",
+  size = "xxl",
   inputName,
   customId,
   inputType = "text",
   selectValues,
+  withoutHeading,
 }: Props) => {
   const id = customId ? customId : inputName.replace(" ", "");
 
@@ -38,7 +43,7 @@ const FormInput = ({
   } else {
     return (
       <label htmlFor={id}>
-        <h2>{inputName}</h2>
+        {!withoutHeading && <h2>{inputName}</h2>}
         <input className={inputSize[size]} type={inputType} id={id} />
       </label>
     );
