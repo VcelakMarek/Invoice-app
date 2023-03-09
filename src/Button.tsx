@@ -2,10 +2,10 @@ import { ReactNode, useState } from "react";
 import DropDownMenu from "./DropDownMenu";
 
 type Props = {
-  color?: "red" | "purple" | "grey";
+  color?: "red" | "purple" | "grey" | "darkBlue";
   children?: ReactNode;
   dropDown?: boolean;
-  onCLick?: () => void;
+  onCLick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   invoice?: boolean;
   DropDownMenu?: ReactNode;
 };
@@ -13,13 +13,15 @@ type Props = {
 const backgroundColor = {
   red: "bg-red hover:bg-red-hover",
   purple: "bg-purple hover:bg-purple-hover",
-  grey: "bg-[#DFE3FA] hover:bg-light-grey",
+  grey: "bg-[#e6e8f5] hover:bg-light-grey",
+  darkBlue: "bg-blue hover:bg-black",
 };
 
 const textColor = {
   red: "text-white",
   purple: "text-white",
-  grey: "light-blue",
+  grey: "text-light-blue",
+  darkBlue: "text-grey",
 };
 
 const Button = ({
@@ -83,7 +85,13 @@ const Button = ({
     );
   } else {
     return (
-      <button className={baseClasses.join(" ")} onClick={onCLick}>
+      <button
+        className={baseClasses.join(" ")}
+        onClick={(e) => {
+          e.preventDefault();
+          onclick;
+        }}
+      >
         {children}
       </button>
     );
