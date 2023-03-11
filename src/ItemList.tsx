@@ -7,10 +7,9 @@ type Props = {
 } & InvoiceTypes;
 
 const ItemList = ({ total, items, edit }: Props) => {
-  const item1 = { name: "", quantity: "", price: "", total: "" };
-  let items1 = [item1];
-
   if (edit) {
+    const item1 = { name: "", quantity: "", price: "", total: "" };
+    let items1 = [item1];
     return (
       <div className="m-auto rounded-t-lg">
         <div className="flex justify-between gap-3">
@@ -38,7 +37,11 @@ const ItemList = ({ total, items, edit }: Props) => {
             <img src="/Invoice_app/assets/icon-delete.svg" alt="" />
           </div>
         ))}
-        <Button onCLick={(items1.push(item1), console.log(items1))}>
+        <Button
+          onCLick={() => {
+            items1.push(item1), console.log(items1);
+          }}
+        >
           + Add New Item
         </Button>
       </div>
