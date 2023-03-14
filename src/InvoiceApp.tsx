@@ -23,8 +23,9 @@ const InvoiceApp = () => {
           <div className="flex gap-10">
             <Button dropDown>Filter by status</Button>
             <Button
+              color="purple"
               invoice
-              onCLick={() => {
+              onClick={() => {
                 setShowmodal(true);
               }}
             >
