@@ -61,7 +61,7 @@ const Invoice = ({ details, newInvoice, ...props }: Props) => {
         <div className="absolute z-10 h-screen w-screen bg-neutral-900/40">
           <div className="fixed h-screen w-[719px] overflow-auto bg-white pb-28 pl-40 pt-14 pr-14">
             <h1>New Invoice</h1>
-            <form id="newInvoice">
+            <form id="newInvoice" className="w-[504px]">
               <h5 className="mb-4">Bill From</h5>
 
               <FormInput
