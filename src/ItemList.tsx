@@ -1,6 +1,7 @@
 import { InvoiceTypes } from "./types/invoiceTypes";
 import FormInput from "./FormInput";
 import Button from "./Button";
+import { useState } from "react";
 
 type Props = {
   edit?: boolean;
@@ -9,7 +10,19 @@ type Props = {
 const ItemList = ({ total, items, edit }: Props) => {
   if (edit) {
     const item1 = { name: "", quantity: "", price: "", total: "" };
-    let items1 = [item1];
+    const [items1, setItems1] = useState([item1]);
+
+    // const deleteByIndex = (index: number) => {
+    //   setItems1((oldValues) => {
+    //     return oldValues.filter((_, i) => i !== index);
+    //   });
+    // };
+
+    const deleteByIndex = (index: number) => {
+      const newList = items1.filter((_, i) => i !== index);
+      setItems1(newList);
+    };
+
     return (
       <div className="m-auto rounded-t-lg">
         <div className="flex justify-between gap-3">
@@ -18,8 +31,8 @@ const ItemList = ({ total, items, edit }: Props) => {
           <h2>Price</h2>
           <h2>Total</h2>
         </div>
-        {items1?.map((item) => (
-          <div key={item.name}>
+        {items1?.map((item, index) => (
+          <div className="flex items-center justify-between" key={index}>
             <FormInput size="m" inputName="Item Name" withoutHeading />
             <FormInput
               size="xs"
@@ -33,13 +46,18 @@ const ItemList = ({ total, items, edit }: Props) => {
               withoutHeading
               inputType="number"
             />
-            <p className="text-sm font-bold text-grey">156</p>
-            <img src="/Invoice_app/assets/icon-delete.svg" alt="" />
+            <p className="px-1 pb-1 text-sm font-bold text-grey">156.00</p>
+            <Button icon onClick={() => deleteByIndex(index)}>
+              <img
+                src="/Invoice_app/assets/icon-delete.svg"
+                alt="delete-icon"
+              />
+            </Button>
           </div>
         ))}
         <Button
-          onCLick={() => {
-            items1.push(item1), console.log(items1);
+          onClick={() => {
+            setItems1((prev) => [...prev, item1]);
           }}
         >
           + Add New Item
