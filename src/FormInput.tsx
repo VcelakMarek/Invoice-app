@@ -5,11 +5,10 @@ type Props = {
   inputType?: "text" | "date" | "select" | "number";
   selectValues?: string[];
   withoutHeading?: boolean;
-  // inputSize: { [key: string]: string };
 };
 
 const inputSize: { [key: string]: string } = {
-  xs: "w-[46px]",
+  xs: "w-[46px] pl-4 pr-0",
   s: "w-[100px]",
   m: "w-[214px]",
   l: "w-[152px]",
