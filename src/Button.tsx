@@ -9,6 +9,7 @@ type Props = {
   invoice?: boolean;
   DropDownMenu?: ReactNode;
   icon?: boolean;
+  disabled?: boolean;
 };
 
 const backgroundColor = {
@@ -34,6 +35,7 @@ const Button = ({
   invoice,
   children,
   icon,
+  disabled,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -91,7 +93,12 @@ const Button = ({
     );
   } else {
     return (
-      <button type="button" className={baseClasses.join(" ")} onClick={onClick}>
+      <button
+        type="button"
+        className={baseClasses.join(" ")}
+        onClick={onClick}
+        disabled={disabled}
+      >
         {children}
       </button>
     );
