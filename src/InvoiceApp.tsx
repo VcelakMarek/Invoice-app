@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { InvoicesContext } from "./Invoices.context";
 import Button from "./Button";
 import { fetchOnLoadData } from "./fetchOnLoadData";
 import Invoice from "./Invoice";
-import { InvoiceTypes } from "./types/invoiceTypes";
 
 const InvoiceApp = () => {
-  const [invoices, setInvoices] = useState<InvoiceTypes[]>([]);
+  const [invoices, setInvoices] = useContext(InvoicesContext);
   const [showModal, setShowmodal] = useState(false);
 
   useEffect(() => {
-    fetchOnLoadData(setInvoices);
+    if (invoices == "") {
+      fetchOnLoadData(setInvoices);
+    }
   }, []);
 
   return (

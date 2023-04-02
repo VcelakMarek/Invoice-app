@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import InvoicesProvider from "./Invoices.context";
 import InvoiceApp from "./InvoiceApp";
 import Details from "./Details";
 
@@ -32,10 +33,12 @@ const App = () => {
             />
           </div>
         </nav>
-        <Routes>
-          <Route path="/Invoice_app/" element={<InvoiceApp />} />
-          <Route path="/details/:id" element={<Details />} />
-        </Routes>
+        <InvoicesProvider>
+          <Routes>
+            <Route path="/Invoice_app/" element={<InvoiceApp />} />
+            <Route path="/details/:id" element={<Details />} />
+          </Routes>
+        </InvoicesProvider>
       </div>
     </BrowserRouter>
   );
