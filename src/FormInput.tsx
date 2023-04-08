@@ -1,3 +1,5 @@
+import { Field } from "react-final-form";
+
 type Props = {
   size?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
   inputName: string;
@@ -43,7 +45,12 @@ const FormInput = ({
     return (
       <label htmlFor={id}>
         {!withoutHeading && <h2>{inputName}</h2>}
-        <input className={inputSize[size]} type={inputType} id={id} />
+        <Field
+          name={inputName}
+          className={inputSize[size]}
+          type={inputType}
+          id={id}
+        />
       </label>
     );
   }
