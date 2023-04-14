@@ -10,7 +10,7 @@ const Details = () => {
   const location = useLocation();
   const { invoiceData } = location.state;
   const navigate = useNavigate();
-  const [invoices, setInvoices] = useContext(InvoicesContext);
+  const { invoices, setInvoices } = useContext(InvoicesContext);
 
   const deleteInvoice = () => {
     setInvoices((current: InvoiceTypes[]) =>
@@ -75,7 +75,7 @@ const Details = () => {
         clientAddress={invoiceData.clientAddress}
         items={invoiceData.items}
         total={invoiceData.total}
-      ></Invoice>
+      />
     </div>
   );
 };

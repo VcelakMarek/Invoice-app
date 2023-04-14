@@ -1,7 +1,15 @@
 import { createContext, useState, Dispatch, SetStateAction } from "react";
-import { InvoiceTypes } from "./types/invoiceTypes";
+import type { InvoiceTypes } from "./types/invoiceTypes";
 
-export const InvoicesContext = createContext("");
+type Context = {
+  invoices: InvoiceTypes[];
+  setInvoices: Dispatch<SetStateAction<InvoiceTypes[]>>;
+};
+
+export const InvoicesContext = createContext<Context>({
+  invoices: [],
+  setInvoices: () => {},
+});
 
 type Props = {
   children: React.ReactNode;
@@ -10,8 +18,13 @@ type Props = {
 const InvoicesProvider = ({ children }: Props) => {
   const [invoices, setInvoices] = useState<InvoiceTypes[]>([]);
 
+  const contextValue = {
+    invoices,
+    setInvoices,
+  };
+
   return (
-    <InvoicesContext.Provider value={[invoices, setInvoices]}>
+    <InvoicesContext.Provider value={contextValue}>
       {children}
     </InvoicesContext.Provider>
   );

@@ -5,11 +5,11 @@ import { fetchOnLoadData } from "./fetchOnLoadData";
 import Invoice from "./Invoice";
 
 const InvoiceApp = () => {
-  const [invoices, setInvoices] = useContext(InvoicesContext);
+  const { invoices, setInvoices } = useContext(InvoicesContext);
   const [showModal, setShowmodal] = useState(false);
 
   useEffect(() => {
-    if (invoices == "") {
+    if (!invoices.length) {
       fetchOnLoadData(setInvoices);
     }
   }, []);
@@ -51,7 +51,7 @@ const InvoiceApp = () => {
               items={invoice.items}
               total={invoice.total}
               key={invoice.id}
-            ></Invoice>
+            />
           ))}
         </div>
         {showModal && <Invoice newInvoice />}

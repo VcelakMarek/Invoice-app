@@ -39,7 +39,7 @@ const Button = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const border = !dropDown ? "rounded-full" : null;
+  const border = !dropDown && "rounded-full";
   const dimensions = !icon
     ? `h-12 ${invoice ? "pl-2" : "pl-6"} pr-6`
     : " pl-5 pb-2";
@@ -78,7 +78,9 @@ const Button = ({
         {isOpen && <DropDownMenu options={options}></DropDownMenu>}
       </>
     );
-  } else if (invoice) {
+  }
+
+  if (invoice) {
     return (
       <button className={invoiceClasses.join(" ")} onClick={onClick}>
         <div className="grid h-8 w-8 place-items-center rounded-full bg-white">
@@ -86,23 +88,23 @@ const Button = ({
             className="pl-px pt-px"
             src="/Invoice_app/assets/icon-plus.svg"
             alt="plus"
-          ></img>
+          />
         </div>
         {children}
       </button>
     );
-  } else {
-    return (
-      <button
-        type="button"
-        className={baseClasses.join(" ")}
-        onClick={onClick}
-        disabled={disabled}
-      >
-        {children}
-      </button>
-    );
   }
+
+  return (
+    <button
+      type="button"
+      className={baseClasses.join(" ")}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default Button;

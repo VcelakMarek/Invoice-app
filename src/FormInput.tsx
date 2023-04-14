@@ -6,7 +6,7 @@ type Props = {
   customId?: string;
   inputType?: "text" | "date" | "select" | "number";
   selectValues?: string[];
-  withoutHeading?: boolean;
+  withHeading?: boolean;
 };
 
 const inputSize: { [key: string]: string } = {
@@ -24,7 +24,7 @@ const FormInput = ({
   customId,
   inputType = "text",
   selectValues,
-  withoutHeading,
+  withHeading = true,
 }: Props) => {
   const id = customId ? customId : inputName.replace(" ", "");
 
@@ -32,23 +32,24 @@ const FormInput = ({
     return (
       <label htmlFor={id}>
         <h2>{inputName}</h2>
-        <select className={inputSize[size]} id={id}>
+        <Field name={id} component="select" className={inputSize[size]} id={id}>
           {selectValues?.map((value) => (
             <option value={value} key={value}>
               {value}
             </option>
           ))}
-        </select>
+        </Field>
       </label>
     );
   } else {
     return (
       <label htmlFor={id}>
-        {!withoutHeading && <h2>{inputName}</h2>}
+        {withHeading && <h2>{inputName}</h2>}
         <Field
-          name={inputName}
+          name={id}
           className={inputSize[size]}
           type={inputType}
+          component="input"
           id={id}
         />
       </label>

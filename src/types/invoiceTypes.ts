@@ -1,3 +1,7 @@
+export type Status = {
+  status: "paid" | "pending" | "draft";
+};
+
 export interface Address {
   street: string;
   city: string;
@@ -20,7 +24,7 @@ export interface InvoiceTypes {
   paymentTerms?: number;
   clientName?: string;
   clientEmail?: string;
-  status?: string;
+  status?: Status;
   senderAddress?: Address;
   clientAddress?: Address;
   items?: Item[];

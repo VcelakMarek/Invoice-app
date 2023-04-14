@@ -12,6 +12,10 @@ type Props = {
   newInvoice?: boolean;
 } & InvoiceTypes;
 
+type FormData = {
+  [key: string]: any;
+};
+
 const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
   if (details) {
     return (
@@ -57,9 +61,44 @@ const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
       </div>
     );
   } else if (newInvoice) {
-    const onSubmit = () => {
-      console.log("values");
+    const initialValues: FormData = {};
+
+    const onSubmit = (values: FormData) => {
+      console.log("FormValues", values);
+
+      const createdInvoice = {
+        id: "test",
+        ...values,
+        paymentDue: "",
+        paymentTerms: values.PaymentTerms,
+        clientName: values.toClientsName,
+        clientEmail: values.toClientsEmail,
+        status: "depends on button",
+        senderAddress: {
+          street: values.fromStreetAddress,
+          city: values.fromCity,
+          postCode: values.fromPostCode,
+          country: values.fromCountry,
+        },
+        clientAddress: {
+          street: values.toStreetAddress,
+          city: values.toCity,
+          postCode: values.toPostCode,
+          country: values.toCountry,
+        },
+        // items: [
+        //   {
+        //     name: `${values.}`,
+        //     quantity: `${values.}`,
+        //     price: `${values.}`,
+        //     total: `${values.}`,
+        //   },
+        // ],
+        // total: `${values.}`,
+      };
+      console.log("createdInovice", createdInvoice);
     };
+
     return (
       <Modal>
         <div className="absolute z-10 h-screen w-screen bg-neutral-900/40">
@@ -69,6 +108,7 @@ const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
               id="newInvoice"
               className="w-[504px]"
               onSubmit={onSubmit}
+              initialValues={initialValues}
               render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
                   <h5 className="mb-4">Bill From</h5>
@@ -123,6 +163,7 @@ const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
                   <div className="flex justify-between">
                     <FormInput
                       inputName="Issue Date"
+                      customId="createdAt"
                       size="xl"
                       inputType="date"
                     />
@@ -139,9 +180,12 @@ const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
                       ]}
                     ></FormInput>
                   </div>
-                  <FormInput inputName="Project Description" />
+                  <FormInput
+                    inputName="Project Description"
+                    customId="description"
+                  />
 
-                  <ItemList edit />
+                  <ItemList isEdit />
 
                   <div className="fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center justify-around bg-white shadow-inner shadow-slate-900">
                     <Button color="grey">Discard</Button>
@@ -159,28 +203,28 @@ const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
         </div>
       </Modal>
     );
-  } else {
-    return (
-      <Link
-        to={`/details/${props.id}`}
-        state={{ invoiceData: props }}
-        className="mb-4 flex h-[72px] w-[65%] items-center justify-around rounded-lg border-[#7C5DFA] bg-white drop-shadow hover:border-[1.5px] hover:p-[-3px]"
-      >
-        <h3 className="first-letter:text-grey">#{props.id}</h3>
-        <h2>Due {props.paymentDue}</h2>
-        <h2>{props.clientName}</h2>
-        <h4>£ {props.total}</h4>
-        <div className="flex items-center gap-5">
-          <Status status={props.status} />
-          <img
-            className="h-2.5"
-            src="/Invoice_app/assets/icon-arrow-right.svg"
-            alt="arrow-right"
-          />
-        </div>
-      </Link>
-    );
   }
+
+  return (
+    <Link
+      to={`/details/${props.id}`}
+      state={{ invoiceData: props }}
+      className="mb-4 flex h-[72px] w-[65%] items-center justify-around rounded-lg border-[#7C5DFA] bg-white drop-shadow hover:border-[1.5px] hover:p-[-3px]"
+    >
+      <h3 className="first-letter:text-grey">#{props.id}</h3>
+      <h2>Due {props.paymentDue}</h2>
+      <h2>{props.clientName}</h2>
+      <h4>£ {props.total}</h4>
+      <div className="flex items-center gap-5">
+        <Status status={props.status ?? "draft"} />
+        <img
+          className="h-2.5"
+          src="/Invoice_app/assets/icon-arrow-right.svg"
+          alt="arrow-right"
+        />
+      </div>
+    </Link>
+  );
 };
 
 export default Invoice;
