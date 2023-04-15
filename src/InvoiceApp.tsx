@@ -37,21 +37,7 @@ const InvoiceApp = () => {
         </header>
         <div className="mt-16 grid place-items-center">
           {invoices.map((invoice) => (
-            <Invoice
-              id={invoice.id}
-              createdAt={invoice.createdAt}
-              paymentDue={invoice.paymentDue}
-              description={invoice.description}
-              paymentTerms={invoice.paymentTerms}
-              clientName={invoice.clientName}
-              clientEmail={invoice.clientEmail}
-              status={invoice.status}
-              senderAddress={invoice.senderAddress}
-              clientAddress={invoice.clientAddress}
-              items={invoice.items}
-              total={invoice.total}
-              key={invoice.id}
-            />
+            <Invoice invoice={invoice} key={invoice.id} />
           ))}
         </div>
         {showModal && <Invoice newInvoice />}

@@ -10,54 +10,61 @@ import Button from "./Button";
 type Props = {
   details?: boolean;
   newInvoice?: boolean;
+  invoice: InvoiceTypes;
 } & InvoiceTypes;
 
 type FormData = {
   [key: string]: any;
 };
 
-const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
+const Invoice = ({
+  details,
+  newInvoice,
+  invoice,
+  onSubmit,
+  ...props
+}: Props) => {
   if (details) {
     return (
       <div className="rounded-lg bg-white p-12">
         <div className="flex justify-between">
           <div>
-            <h4>#{props.id}</h4>
-            <h2>{props.description}</h2>
+            <h4>#{invoice.id}</h4>
+            <h2>{invoice.description}</h2>
           </div>
 
           <div>
-            <h2>{props.senderAddress?.street}</h2>
-            <h2>{props.senderAddress?.city}</h2>
-            <h2>{props.senderAddress?.postCode}</h2>
-            <h2>{props.senderAddress?.country}</h2>
+            <h2>{invoice.senderAddress?.street}</h2>
+            <h2>{invoice.senderAddress?.city}</h2>
+            <h2>{invoice.senderAddress?.postCode}</h2>
+            <h2>{invoice.senderAddress?.country}</h2>
           </div>
         </div>
 
         <div className="mt-12 flex justify-between pb-12">
           <div>
             <h2>Invoice Date</h2>
-            <h4>{props.createdAt}</h4>
+            <h4>{invoice.createdAt}</h4>
 
             <h2 className="mt-8">Payment Due</h2>
-            <h4>{props.paymentDue}</h4>
+            <h4>{invoice.paymentDue}</h4>
           </div>
 
           <div>
             <h2>Bill To</h2>
-            <h4>{props.clientName}</h4>
-            <h2>{props.clientAddress?.street}</h2>
-            <h2>{props.clientAddress?.city}</h2>
-            <h2>{props.clientAddress?.postCode}</h2>
-            <h2>{props.clientAddress?.country}</h2>
+            <h4>{invoice.clientName}</h4>
+            <h2>{invoice.clientAddress?.street}</h2>
+            <h2>{invoice.clientAddress?.city}</h2>
+            <h2>{invoice.clientAddress?.postCode}</h2>
+            <h2>{invoice.clientAddress?.country}</h2>
           </div>
 
           <div className="mr-32">
             <h2>Sent To</h2>
-            <h4>{props.clientEmail}</h4>
+            <h4>{invoice.clientEmail}</h4>
           </div>
         </div>
-        <ItemList items={props.items} total={props.total} />
+        <ItemList items={invoice.items} total={invoice.total} />
       </div>
     );
   } else if (newInvoice) {
@@ -207,16 +214,16 @@ const Invoice = ({ details, newInvoice, onSubmit, ...props }: Props) => {
 
   return (
     <Link
-      to={`/details/${props.id}`}
-      state={{ invoiceData: props }}
+      to={`/details/${invoice.id}`}
+      state={{ invoiceData: invoice }}
       className="mb-4 flex h-[72px] w-[65%] items-center justify-around rounded-lg border-[#7C5DFA] bg-white drop-shadow hover:border-[1.5px] hover:p-[-3px]"
     >
-      <h3 className="first-letter:text-grey">#{props.id}</h3>
-      <h2>Due {props.paymentDue}</h2>
-      <h2>{props.clientName}</h2>
-      <h4>£ {props.total}</h4>
+      <h3 className="first-letter:text-grey">#{invoice.id}</h3>
+      <h2>Due {invoice.paymentDue}</h2>
+      <h2>{invoice.clientName}</h2>
+      <h4>£ {invoice.total}</h4>
       <div className="flex items-center gap-5">
-        <Status status={props.status ?? "draft"} />
+        <Status status={invoice.status ?? "draft"} />
         <img
           className="h-2.5"
           src="/Invoice_app/assets/icon-arrow-right.svg"

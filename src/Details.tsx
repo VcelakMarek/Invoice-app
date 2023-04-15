@@ -61,21 +61,7 @@ const Details = () => {
           </Button>
         </div>
       </div>
-      <Invoice
-        details
-        id={invoiceData.id}
-        createdAt={invoiceData.createdAt}
-        paymentDue={invoiceData.paymentDue}
-        description={invoiceData.description}
-        paymentTerms={invoiceData.paymentTerms}
-        clientName={invoiceData.clientName}
-        clientEmail={invoiceData.clientEmail}
-        status={invoiceData.status}
-        senderAddress={invoiceData.senderAddress}
-        clientAddress={invoiceData.clientAddress}
-        items={invoiceData.items}
-        total={invoiceData.total}
-      />
+      <Invoice details invoice={invoiceData} />
     </div>
   );
 };
