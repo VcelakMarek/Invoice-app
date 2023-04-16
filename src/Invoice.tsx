@@ -77,7 +77,6 @@ const Invoice = ({
         id: "test",
         ...values,
         paymentDue: "",
-        paymentTerms: values.PaymentTerms,
         clientName: values.toClientsName,
         clientEmail: values.toClientsEmail,
         status: "depends on button",
@@ -95,13 +94,13 @@ const Invoice = ({
         },
         // items: [
         //   {
-        //     name: `${values.}`,
-        //     quantity: `${values.}`,
-        //     price: `${values.}`,
-        //     total: `${values.}`,
+        //     name: values.},
+        //     quantity: values.},
+        //     price: values.,
+        //     total: values,
         //   },
         // ],
-        // total: `${values.}`,
+        // total: values,
       };
       console.log("createdInovice", createdInvoice);
     };
@@ -122,75 +121,52 @@ const Invoice = ({
 
                   <FormInput
                     inputName="Street Address"
-                    customId="fromStreetAddress"
+                    id="fromStreetAddress"
                   />
 
                   <div className="flex justify-between">
-                    <FormInput inputName="City" size="l" customId="fromCity" />
+                    <FormInput inputName="City" size="l" id="fromCity" />
                     <FormInput
                       inputName="Post Code"
                       size="l"
-                      customId="fromPostCode"
+                      id="fromPostCode"
                     />
-                    <FormInput
-                      inputName="Country"
-                      size="l"
-                      customId="fromCountry"
-                    />
+                    <FormInput inputName="Country" size="l" id="fromCountry" />
                   </div>
 
                   <h5 className="mb-4">Bill To</h5>
 
-                  <FormInput
-                    inputName="Client`s Name"
-                    customId="toClientsName"
-                  />
-                  <FormInput
-                    inputName="Client`s Email"
-                    customId="toClientsEmail"
-                  />
-                  <FormInput
-                    inputName="Street Address"
-                    customId="toStreetAddress"
-                  />
+                  <FormInput inputName="Client`s Name" id="toClientsName" />
+                  <FormInput inputName="Client`s Email" id="toClientsEmail" />
+                  <FormInput inputName="Street Address" id="toStreetAddress" />
 
                   <div className="flex justify-between">
-                    <FormInput inputName="City" size="l" customId="toCity" />
-                    <FormInput
-                      inputName="Post Code"
-                      size="l"
-                      customId="toPostCode"
-                    />
-                    <FormInput
-                      inputName="Country"
-                      size="l"
-                      customId="toCountry"
-                    />
+                    <FormInput inputName="City" size="l" id="toCity" />
+                    <FormInput inputName="Post Code" size="l" id="toPostCode" />
+                    <FormInput inputName="Country" size="l" id="toCountry" />
                   </div>
                   <div className="flex justify-between">
                     <FormInput
                       inputName="Issue Date"
-                      customId="createdAt"
+                      id="createdAt"
                       size="xl"
                       inputType="date"
                     />
 
                     <FormInput
+                      id="paymentTerms"
                       inputName="Payment Terms"
                       size="xl"
                       inputType="select"
                       selectValues={[
-                        "Net 1 Day",
-                        "Net 7 Days",
-                        "Net 14 Days",
-                        "Net 30 Days",
+                        ["Net 1 Day", 1],
+                        ["Net 7 Days", 7],
+                        ["Net 14 Days", 14],
+                        ["Net 30 Days", 30],
                       ]}
                     ></FormInput>
                   </div>
-                  <FormInput
-                    inputName="Project Description"
-                    customId="description"
-                  />
+                  <FormInput inputName="Project Description" id="description" />
 
                   <ItemList isEdit />
 

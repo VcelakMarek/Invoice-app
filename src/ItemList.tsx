@@ -43,21 +43,21 @@ const ItemList = ({ total, items, isEdit }: Props) => {
                   size="m"
                   inputName="Item Name"
                   withHeading={false}
-                  customId={`ItemName ${index}`}
+                  id={`ItemName ${index}`}
                 />
                 <FormInput
                   size="xs"
                   inputName="Qty"
                   withHeading={false}
                   inputType="number"
-                  customId={`Qty ${index}`}
+                  id={`Qty ${index}`}
                 />
                 <FormInput
                   size="s"
                   inputName="Price"
                   withHeading={false}
                   inputType="number"
-                  customId={`Price ${index}`}
+                  id={`Price ${index}`}
                 />
                 <p className="px-1 pb-1 text-sm font-bold text-grey">156.00</p>
                 <Button icon onClick={() => deleteByIndex(index)}>

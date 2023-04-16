@@ -3,9 +3,9 @@ import { Field } from "react-final-form";
 type Props = {
   size?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
   inputName: string;
-  customId?: string;
+  id: string;
   inputType?: "text" | "date" | "select" | "number";
-  selectValues?: string[];
+  selectValues?: [string, number][];
   withHeading?: boolean;
 };
 
@@ -21,21 +21,19 @@ const inputSize: { [key: string]: string } = {
 const FormInput = ({
   size = "xxl",
   inputName,
-  customId,
+  id,
   inputType = "text",
   selectValues,
   withHeading = true,
 }: Props) => {
-  const id = customId ? customId : inputName.replace(" ", "");
-
   if (inputType === "select") {
     return (
       <label htmlFor={id}>
         <h2>{inputName}</h2>
         <Field name={id} component="select" className={inputSize[size]} id={id}>
           {selectValues?.map((value) => (
-            <option value={value} key={value}>
-              {value}
+            <option value={value[1]} key={value[0]}>
+              {value[0]}
             </option>
           ))}
         </Field>
