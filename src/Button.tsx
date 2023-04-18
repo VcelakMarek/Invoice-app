@@ -1,7 +1,8 @@
 import { ReactNode, useState } from "react";
 import DropDownMenu from "./DropDownMenu";
+import type { DropDownMenuTypes } from "types/dropDownMenuTypes";
 
-type Props = {
+type Props = Partial<DropDownMenuTypes> & {
   color?: "red" | "purple" | "grey" | "darkBlue" | "transparent";
   children?: ReactNode;
   dropDown?: boolean;
@@ -36,6 +37,9 @@ const Button = ({
   children,
   icon,
   disabled,
+  options,
+  checkedStatuses,
+  onChange,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -57,8 +61,6 @@ const Button = ({
   const dropDownClasses = [text, flex, "relative"];
   const invoiceClasses = baseClasses.concat(flex);
 
-  const options = ["Draft", "Pendind", "Paid"];
-
   if (dropDown) {
     return (
       <>
@@ -75,7 +77,13 @@ const Button = ({
             alt="arrow-down"
           ></img>
         </button>
-        {isOpen && <DropDownMenu options={options}></DropDownMenu>}
+        {isOpen && (
+          <DropDownMenu
+            options={options}
+            checkedStatuses={checkedStatuses}
+            onChange={onChange}
+          ></DropDownMenu>
+        )}
       </>
     );
   }
