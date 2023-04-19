@@ -5,5 +5,5 @@ export type CheckedStatuses = {
 export type DropDownMenuTypes = {
   options: string[];
   checkedStatuses: CheckedStatuses;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
