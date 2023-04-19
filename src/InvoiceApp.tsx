@@ -7,10 +7,11 @@ import type {
   DropDownMenuTypes,
   CheckedStatuses,
 } from "types/dropDownMenuTypes";
+import { InvoiceTypes } from "types/invoiceTypes";
 
 const InvoiceApp = () => {
   const { invoices, setInvoices } = useContext(InvoicesContext);
-  const [filteredInvoices, setFilteredInvoices] = useState([]);
+  const [filteredInvoices, setFilteredInvoices] = useState<InvoiceTypes[]>([]);
   const [showModal, setShowmodal] = useState(false);
   const [checkedStatuses, setcheckedStatuses] = useState<CheckedStatuses>({
     draft: false,
@@ -30,17 +31,9 @@ const InvoiceApp = () => {
       (key) => checkedStatuses[key] === true
     );
 
-    let filteredInvoices1 = [];
-
-    for (const trueValue of trueValues) {
-      const filteredByValue = invoices.filter(
-        (invoice) => invoice.status === trueValue
-      );
-
-      filteredInvoices1 = filteredInvoices1.concat(filteredByValue);
-    }
-
-    setFilteredInvoices(filteredInvoices1);
+    setFilteredInvoices(
+      invoices.filter((invoice) => trueValues.includes(invoice.status))
+    );
   }, [checkedStatuses]);
 
   const onCheckitemsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +47,13 @@ const InvoiceApp = () => {
         <header className="w-800px mt-16 flex h-14 flex-row items-start justify-around">
           <div>
             <h1>Invoices</h1>
-            <h2>There are {invoices.length} total invoices</h2>
+            <h2>
+              There are{" "}
+              {filteredInvoices.length > 0
+                ? filteredInvoices.length
+                : invoices.length}{" "}
+              total invoices
+            </h2>
           </div>
           <div className="flex gap-10">
             <Button
