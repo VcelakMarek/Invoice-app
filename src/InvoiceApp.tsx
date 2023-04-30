@@ -3,6 +3,7 @@ import { InvoicesContext } from "./Invoices.context";
 import Button from "./Button";
 import { fetchOnLoadData } from "./fetchOnLoadData";
 import Invoice from "./Invoice";
+import Form from "./InvoiceForm";
 import type {
   DropDownMenuTypes,
   CheckedStatuses,
@@ -84,7 +85,7 @@ const InvoiceApp = () => {
                 <Invoice invoice={invoice} key={invoice.id} />
               ))}
         </div>
-        {showModal && <Invoice newInvoice />}
+        {showModal && <Form />}
       </main>
     </div>
   );
