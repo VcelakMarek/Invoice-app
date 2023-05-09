@@ -9,11 +9,7 @@ type Props = {
   invoice: InvoiceTypes;
 } & InvoiceTypes;
 
-type FormData = {
-  [key: string]: any;
-};
-
-const Invoice = ({ details, newInvoice, invoice, ...props }: Props) => {
+const Invoice = ({ details, invoice }: Props) => {
   if (details) {
     return (
       <div className="rounded-lg bg-white p-12">
