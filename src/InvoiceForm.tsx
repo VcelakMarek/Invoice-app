@@ -1,11 +1,26 @@
 import Modal from "./Modal";
 import FormInput from "./FormInput";
 import { Form } from "react-final-form";
+import arrayMutators from "final-form-arrays";
+import { FieldArray } from "react-final-form-arrays";
 import Button from "./Button";
-import ItemList from "./ItemList";
+import { useContext } from "react";
+import { InvoiceTypes } from "types/invoiceTypes";
+import { InvoicesContext } from "./Invoices.context";
+
+type FormData = {
+  [key: string]: InvoiceTypes[];
+};
 
 const InvoiceForm = () => {
-  const initialValues: FormData = {};
+  const { setInvoices } = useContext(InvoicesContext);
+
+  const createEmptyItem = () => ({
+    name: "",
+    quantity: "",
+    price: "",
+    total: "",
+  });
 
   const onSubmit = (values: FormData) => {
     console.log("FormValues", values);
@@ -16,7 +31,7 @@ const InvoiceForm = () => {
       paymentDue: "",
       clientName: values.toClientsName,
       clientEmail: values.toClientsEmail,
-      status: "depends on button",
+      status: "pending",
       senderAddress: {
         street: values.fromStreetAddress,
         city: values.fromCity,
@@ -29,17 +44,9 @@ const InvoiceForm = () => {
         postCode: values.toPostCode,
         country: values.toCountry,
       },
-      // items: [
-      //   {
-      //     name: values.},
-      //     quantity: values.},
-      //     price: values.,
-      //     total: values,
-      //   },
-      // ],
-      // total: values,
     };
     console.log("createdInovice", createdInvoice);
+    setInvoices((prev) => [...prev, createdInvoice] as InvoiceTypes[]);
   };
 
   return (
@@ -51,8 +58,9 @@ const InvoiceForm = () => {
             id="newInvoice"
             className="w-[504px]"
             onSubmit={onSubmit}
-            initialValues={initialValues}
-            render={({ handleSubmit }) => (
+            initialValues={{ items: [createEmptyItem()] }}
+            mutators={{ ...arrayMutators }}
+            render={({ handleSubmit, values }) => (
               <form onSubmit={handleSubmit}>
                 <h5 className="mb-4">Bill From</h5>
 
@@ -98,7 +106,69 @@ const InvoiceForm = () => {
                 </div>
                 <FormInput inputName="Project Description" id="description" />
 
-                <ItemList isEdit />
+                <div>
+                  <div className="m-auto rounded-t-lg">
+                    <div className="flex justify-between gap-3">
+                      <h2 className="mr-36">Item Name</h2>
+                      <h2>QTY</h2>
+                      <h2>Price</h2>
+                      <h2>Total</h2>
+                    </div>
+                    <FieldArray
+                      name="items"
+                      render={({ fields }) => (
+                        <>
+                          {values.items.length
+                            ? values.items.map((value, index) => (
+                                <div
+                                  className="flex items-center justify-between"
+                                  key={index}
+                                >
+                                  <FormInput
+                                    size="m"
+                                    inputName="Item Name"
+                                    withHeading={false}
+                                    id={`items[${index}].name`}
+                                  />
+                                  <FormInput
+                                    size="xs"
+                                    inputName="Qty"
+                                    withHeading={false}
+                                    inputType="number"
+                                    id={`items[${index}].quantity`}
+                                  />
+                                  <FormInput
+                                    size="s"
+                                    inputName="Price"
+                                    withHeading={false}
+                                    inputType="number"
+                                    id={`items[${index}].price`}
+                                  />
+                                  <p className="px-1 pb-1 text-sm font-bold text-grey">
+                                    £ {value.quantity * value.price}
+                                  </p>
+                                  <Button
+                                    icon
+                                    onClick={() => fields.remove(index)}
+                                  >
+                                    <img
+                                      src="/Invoice_app/assets/icon-delete.svg"
+                                      alt="delete-icon"
+                                    />
+                                  </Button>
+                                </div>
+                              ))
+                            : null}
+                          <Button
+                            onClick={() => fields.push(createEmptyItem())}
+                          >
+                            + Add New Item
+                          </Button>
+                        </>
+                      )}
+                    />
+                  </div>
+                </div>
 
                 <div className="fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center justify-around bg-white shadow-inner shadow-slate-900">
                   <Button color="grey">Discard</Button>
