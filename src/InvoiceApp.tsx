@@ -4,16 +4,13 @@ import Button from "./Button";
 import { fetchOnLoadData } from "./fetchOnLoadData";
 import Invoice from "./Invoice";
 import Form from "./InvoiceForm";
-import type {
-  DropDownMenuTypes,
-  CheckedStatuses,
-} from "types/dropDownMenuTypes";
+import type { CheckedStatuses } from "types/dropDownMenuTypes";
 import { InvoiceTypes } from "types/invoiceTypes";
 
 const InvoiceApp = () => {
   const { invoices, setInvoices } = useContext(InvoicesContext);
   const [filteredInvoices, setFilteredInvoices] = useState<InvoiceTypes[]>([]);
-  const [showModal, setShowmodal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [checkedStatuses, setcheckedStatuses] = useState<CheckedStatuses>({
     draft: false,
     pending: false,
@@ -69,7 +66,7 @@ const InvoiceApp = () => {
               color="purple"
               invoice
               onClick={() => {
-                setShowmodal(true);
+                setShowModal(true);
               }}
             >
               New Invoice
