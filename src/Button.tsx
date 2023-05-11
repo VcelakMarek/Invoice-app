@@ -1,8 +1,6 @@
-import { ReactNode, useState } from "react";
-import DropDownMenu from "./DropDownMenu";
-import type { DropDownMenuTypes } from "types/dropDownMenuTypes";
+import { ReactNode } from "react";
 
-type Props = Partial<DropDownMenuTypes> & {
+type Props = {
   color?: "red" | "purple" | "grey" | "darkBlue" | "transparent";
   children?: ReactNode;
   dropDown?: boolean;
@@ -11,6 +9,7 @@ type Props = Partial<DropDownMenuTypes> & {
   DropDownMenu?: ReactNode;
   icon?: boolean;
   disabled?: boolean;
+  isOpen?: boolean;
 };
 
 const backgroundColor = {
@@ -37,12 +36,8 @@ const Button = ({
   children,
   icon,
   disabled,
-  options,
-  checkedStatuses,
-  onChange,
+  isOpen,
 }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const border = !dropDown && "rounded-full";
   const dimensions = !icon
     ? `h-12 ${invoice ? "pl-2" : "pl-6"} pr-6`
@@ -63,28 +58,14 @@ const Button = ({
 
   if (dropDown) {
     return (
-      <>
-        <button
-          className={dropDownClasses.join(" ")}
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        >
-          {children}
-          <img
-            className={isOpen ? "rotate-180 duration-500" : "duration-500"}
-            src="/Invoice_app/assets/icon-arrow-down.svg"
-            alt="arrow-down"
-          ></img>
-        </button>
-        {isOpen && (
-          <DropDownMenu
-            options={options}
-            checkedStatuses={checkedStatuses}
-            onChange={onChange}
-          ></DropDownMenu>
-        )}
-      </>
+      <button className={dropDownClasses.join(" ")} onClick={onClick}>
+        {children}
+        <img
+          className={isOpen ? "rotate-180 duration-500" : "duration-500"}
+          src="/Invoice_app/assets/icon-arrow-down.svg"
+          alt="arrow-down"
+        ></img>
+      </button>
     );
   }
 

@@ -5,7 +5,8 @@ import { fetchOnLoadData } from "./fetchOnLoadData";
 import Invoice from "./Invoice";
 import Form from "./InvoiceForm";
 import type { CheckedStatuses } from "types/dropDownMenuTypes";
-import { InvoiceTypes } from "types/invoiceTypes";
+import type { InvoiceTypes } from "types/invoiceTypes";
+import DropDownMenu from "./DropDownMenu";
 
 const InvoiceApp = () => {
   const { invoices, setInvoices } = useContext(InvoicesContext);
@@ -54,14 +55,12 @@ const InvoiceApp = () => {
             </h2>
           </div>
           <div className="flex gap-10">
-            <Button
-              dropDown
+            <DropDownMenu
               options={OPTIONS}
               checkedStatuses={checkedStatuses}
               onChange={onCheckitemsChange}
-            >
-              Filter by status
-            </Button>
+              menuName="Filter by status"
+            ></DropDownMenu>
             <Button
               color="purple"
               invoice
