@@ -1,18 +1,22 @@
+import { useContext, FC } from "react";
 import Modal from "./Modal";
 import FormInput from "./FormInput";
 import { Form } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
 import Button from "./Button";
-import { useContext } from "react";
-import { InvoiceTypes } from "types/invoiceTypes";
+import type { InvoiceTypes } from "types/invoiceTypes";
 import { InvoicesContext } from "./Invoices.context";
 
 type FormData = {
   [key: string]: InvoiceTypes[];
 };
 
-const InvoiceForm = () => {
+type InvoiceFormProps = {
+  onCloseModal: (event: React.MouseEvent<HTMLButtonElement>) => void;
+};
+
+const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
   const { setInvoices } = useContext(InvoicesContext);
 
   const createEmptyItem = () => ({
@@ -171,7 +175,9 @@ const InvoiceForm = () => {
                 </div>
 
                 <div className="fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center justify-around bg-white shadow-inner shadow-slate-900">
-                  <Button color="grey">Discard</Button>
+                  <Button color="grey" onClick={onCloseModal}>
+                    Discard
+                  </Button>
                   <div className="flex gap-2">
                     <Button color="darkBlue">Save as Draft</Button>
                     <Button color="purple">Save & Send</Button>

@@ -3,7 +3,7 @@ import { InvoicesContext } from "./Invoices.context";
 import Button from "./Button";
 import { fetchOnLoadData } from "./fetchOnLoadData";
 import Invoice from "./Invoice";
-import Form from "./InvoiceForm";
+import InvoiceForm from "./InvoiceForm";
 import type { CheckedStatuses } from "types/dropDownMenuTypes";
 import type { InvoiceTypes } from "types/invoiceTypes";
 import DropDownMenu from "./DropDownMenu";
@@ -81,7 +81,14 @@ const InvoiceApp = () => {
                 <Invoice invoice={invoice} key={invoice.id} />
               ))}
         </div>
-        {showModal && <Form />}
+        {showModal && (
+          <InvoiceForm
+            onCloseModal={(e: React.MouseEvent<HTMLButtonElement>): void => {
+              e.preventDefault();
+              setShowModal(false);
+            }}
+          />
+        )}
       </main>
     </div>
   );
