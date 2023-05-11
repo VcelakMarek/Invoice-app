@@ -53,7 +53,7 @@ const Button = ({
     text,
   ];
 
-  const dropDownClasses = [text, flex, "relative"];
+  const dropDownClasses = [text, flex];
   const invoiceClasses = baseClasses.concat(flex);
 
   if (dropDown) {
