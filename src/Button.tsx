@@ -7,6 +7,7 @@ type Props = {
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   invoice?: boolean;
   DropDownMenu?: ReactNode;
+  goBack?: boolean;
   icon?: boolean;
   disabled?: boolean;
   isOpen?: boolean;
@@ -31,6 +32,7 @@ const textColor = {
 const Button = ({
   color = "transparent",
   dropDown,
+  goBack,
   onClick,
   invoice,
   children,
@@ -80,6 +82,19 @@ const Button = ({
           />
         </div>
         {children}
+      </button>
+    );
+  }
+
+  if (goBack) {
+    return (
+      <button className="mb-6 flex justify-between gap-5" onClick={onClick}>
+        <img
+          src="/Invoice_app/assets/icon-arrow-left.svg"
+          alt="go back"
+          className="m-auto h-2"
+        />
+        <h3 className="mt-0.5">Go back</h3>
       </button>
     );
   }
