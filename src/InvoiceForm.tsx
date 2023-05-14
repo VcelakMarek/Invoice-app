@@ -7,6 +7,7 @@ import { FieldArray } from "react-final-form-arrays";
 import Button from "./Button";
 import type { InvoiceTypes } from "types/invoiceTypes";
 import { InvoicesContext } from "./Invoices.context";
+import generateId from "./generateId";
 
 type FormData = {
   [key: string]: InvoiceTypes[];
@@ -17,7 +18,7 @@ type InvoiceFormProps = {
 };
 
 const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
-  const { setInvoices } = useContext(InvoicesContext);
+  const { invoices, setInvoices } = useContext(InvoicesContext);
 
   const createEmptyItem = () => ({
     name: "",
@@ -28,14 +29,14 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
 
   const onSubmit = (values: FormData) => {
     console.log("FormValues", values);
+    const id = generateId(invoices);
 
     const createdInvoice = {
-      id: "test",
+      id: id,
       ...values,
       paymentDue: "",
       clientName: values.toClientsName,
       clientEmail: values.toClientsEmail,
-      status: "pending",
       senderAddress: {
         street: values.fromStreetAddress,
         city: values.fromCity,
@@ -64,7 +65,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
             onSubmit={onSubmit}
             initialValues={{ items: [createEmptyItem()] }}
             mutators={{ ...arrayMutators }}
-            render={({ handleSubmit, values }) => (
+            render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit}>
                 <h5 className="mb-4">Bill From</h5>
 
@@ -179,10 +180,24 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
                     Discard
                   </Button>
                   <div className="flex gap-2">
-                    <Button color="darkBlue">Save as Draft</Button>
-                    <Button color="purple">Save & Send</Button>
-
-                    <button type="submit">submit</button>
+                    <Button
+                      color="darkBlue"
+                      submit
+                      onClick={() => {
+                        form.change("status", "draft");
+                      }}
+                    >
+                      Save as Draft
+                    </Button>
+                    <Button
+                      color="purple"
+                      submit
+                      onClick={() => {
+                        form.change("status", "pending");
+                      }}
+                    >
+                      Save & Send
+                    </Button>
                   </div>
                 </div>
               </form>
