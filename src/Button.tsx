@@ -11,6 +11,7 @@ type Props = {
   icon?: boolean;
   disabled?: boolean;
   isOpen?: boolean;
+  submit?: boolean;
 };
 
 const backgroundColor = {
@@ -39,6 +40,7 @@ const Button = ({
   icon,
   disabled,
   isOpen,
+  submit,
 }: Props) => {
   const border = !dropDown && "rounded-full";
   const dimensions = !icon
@@ -101,7 +103,7 @@ const Button = ({
 
   return (
     <button
-      type="button"
+      type={submit ? "submit" : "button"}
       className={baseClasses.join(" ")}
       onClick={onClick}
       disabled={disabled}
