@@ -2,12 +2,17 @@ import { useContext, FC } from "react";
 import Modal from "./Modal";
 import FormInput from "./FormInput";
 import { Form } from "react-final-form";
+import { FormApi } from "final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
 import Button from "./Button";
 import type { InvoiceTypes } from "types/invoiceTypes";
 import { InvoicesContext } from "./Invoices.context";
 import generateId from "./generateId";
+import validate from "./validation";
+
+import { setIn } from "final-form";
+import { AnyObject } from "final-form";
 
 type FormData = {
   [key: string]: InvoiceTypes[];
@@ -15,20 +20,23 @@ type FormData = {
 
 type InvoiceFormProps = {
   onCloseModal: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  form: FormApi<FormData>;
 };
 
-const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
+const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
   const { invoices, setInvoices } = useContext(InvoicesContext);
 
   const createEmptyItem = () => ({
     name: "",
-    quantity: "",
+    quantity: 0,
     price: "",
     total: "",
   });
 
-  const onSubmit = (values: FormData) => {
+  const onSubmit = (values: FormData, form: FormApi<FormData>) => {
     console.log("FormValues", values);
+
+    form.submit();
     const id = generateId(invoices);
 
     const createdInvoice = {
@@ -63,13 +71,18 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
             id="newInvoice"
             className="w-[504px]"
             onSubmit={onSubmit}
+            validate={(values) => validate(values)}
             initialValues={{ items: [createEmptyItem()] }}
             mutators={{ ...arrayMutators }}
             render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit}>
                 <h5 className="mb-4">Bill From</h5>
 
-                <FormInput inputName="Street Address" id="fromStreetAddress" />
+                <FormInput
+                  inputName="Street Address"
+                  id="fromStreetAddress"
+                  validateFields={["fromStreetAddress"]}
+                />
 
                 <div className="flex justify-between">
                   <FormInput inputName="City" size="l" id="fromCity" />
@@ -194,6 +207,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
                       submit
                       onClick={() => {
                         form.change("status", "pending");
+                        onSubmit(form.getState().values, form);
                       }}
                     >
                       Save & Send
