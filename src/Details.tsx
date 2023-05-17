@@ -45,7 +45,9 @@ const Details = () => {
           <Status status={invoiceData.status}></Status>
         </div>
         <div className="flex gap-2">
-          <Button color="grey">Edit</Button>
+          <Button color="grey" disabled={invoiceData.status === "paid"}>
+            Edit
+          </Button>
           <Button
             color="red"
             onClick={() => {
@@ -60,7 +62,9 @@ const Details = () => {
             onClick={() => {
               markAsPaid();
             }}
-            disabled={invoiceData.status === "paid"}
+            disabled={
+              invoiceData.status === "paid" || invoiceData.draft === "draft"
+            }
           >
             Mark as Paid
           </Button>
