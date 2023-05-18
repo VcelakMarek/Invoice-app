@@ -31,13 +31,8 @@ const DropDownMenu = ({
                   value={option}
                   checked={checkedStatuses[option]}
                   onChange={onChange}
-                  className="mr-3 mb-2 h-4 w-4 cursor-pointer border border-purple bg-purple"
+                  className="mr-3 mb-2 h-4 w-4"
                 />
-                {/* <img
-                className="text-blue-600 h-3 w-3 fill-current"
-                src="/Invoice_app/assets/icon-check.svg"
-                alt="icon-check"
-              /> */}
 
                 <div className="pt-1.5 first-letter:uppercase">
                   <label
