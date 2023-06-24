@@ -25,27 +25,22 @@ const validationSchema = Yup.object().shape({
   "items[].price": Yup.number().required("Price is required"),
 });
 
-const validateSchemaAsync = (schema: ValidationSchema) => (values: any) => {
-  if (values.status === "pending") {
-    return schema
-      .validate(values, { abortEarly: false })
-      .then(() => {
-        console.log("Validation successful");
-        return Promise.resolve(undefined);
-      })
-      .catch((err: Yup.ValidationError) => {
-        console.log("Validation errors:", err);
-        const errors = err.inner.reduce(
-          (formError, innerError) =>
-            setIn(formError, innerError.path as string, innerError.message),
-          {}
-        );
-        console.log("error", errors);
-        return Promise.resolve(errors);
-      });
-  }
-};
+const validateFormValues =
+  (schema: ValidationSchema) => async (values: any) => {
+    if (typeof schema === "function") {
+      schema = schema();
+    }
+    try {
+      await schema.validateSync(values, { abortEarly: false });
+    } catch (err: Yup.ValidationError) {
+      const errors = err.inner.reduce((formError, innerError) => {
+        return setIn(formError, innerError.path, innerError.message);
+      }, {});
+      console.log("catched", errors);
+      return errors;
+    }
+  };
 
-const validate = validateSchemaAsync(validationSchema);
+const validate = validateFormValues(validationSchema);
 
 export default validate;
