@@ -11,9 +11,6 @@ import { InvoicesContext } from "./Invoices.context";
 import generateId from "./generateId";
 import validate from "./validation";
 
-import { setIn } from "final-form";
-import { AnyObject } from "final-form";
-
 type FormData = {
   [key: string]: InvoiceTypes[];
 };
@@ -39,6 +36,20 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
     form.submit();
     const id = generateId(invoices);
 
+    // // if (status === "pending") {
+    //   const errors = validate()
+    //   if (errors) {
+    //     break
+    //     display error
+    //   }
+    //   else
+    //   create new pending invoice
+    // }
+    // else
+    // {
+    //   create new draft invoice
+    // }
+
     const createdInvoice = {
       id: id,
       ...values,
@@ -60,7 +71,20 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
     };
     console.log("createdInovice", createdInvoice);
     setInvoices((prev) => [...prev, createdInvoice] as InvoiceTypes[]);
+
+    // isValidated(values);
   };
+
+  // const isValidated = async (values) => {
+  //   const errors = await validate(values);
+  //   if (!errors && Object.keys(values).length > 0) {
+  //     // Handle validation errors
+  //     console.log("Validation errors:", errors);
+  //   } else {
+  //     // Proceed with form submission
+  //     console.log("Form submitted successfully");
+  //   }
+  // };
 
   return (
     <Modal>
@@ -71,7 +95,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
             id="newInvoice"
             className="w-[504px]"
             onSubmit={onSubmit}
-            validate={(values) => validate(values)}
+            validate={validate}
             initialValues={{ items: [createEmptyItem()] }}
             mutators={{ ...arrayMutators }}
             render={({ handleSubmit, values, form }) => (
@@ -80,8 +104,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
 
                 <FormInput
                   inputName="Street Address"
-                  id="fromStreetAddress"
-                  validateFields={["fromStreetAddress"]}
+                  id="fromStreetAddress" /*pending={inv}*/
                 />
 
                 <div className="flex justify-between">
