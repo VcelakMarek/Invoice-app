@@ -96,7 +96,7 @@ const Button = ({
           alt="go back"
           className="m-auto h-2"
         />
-        <h3 className="mt-0.5">Go back</h3>
+        <h3 className="mt-0.5 hover:text-grey">Go back</h3>
       </button>
     );
   }
