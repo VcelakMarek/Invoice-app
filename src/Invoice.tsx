@@ -15,7 +15,10 @@ const Invoice = ({ details, invoice }: Props) => {
       <div className="rounded-lg bg-white p-12">
         <div className="flex justify-between">
           <div>
-            <h4>#{invoice.id}</h4>
+            <h4>
+              <span className="font-bold text-grey">#</span>
+              {invoice.id}
+            </h4>
             <h2>{invoice.description}</h2>
           </div>
 
@@ -59,13 +62,16 @@ const Invoice = ({ details, invoice }: Props) => {
     <Link
       to={`/details/${invoice.id}`}
       state={{ invoiceData: invoice }}
-      className="mb-4 flex h-[72px] w-[65%] items-center justify-around rounded-lg border-[#7C5DFA] bg-white drop-shadow hover:border-[1.5px] hover:p-[-3px]"
+      className="mb-4 flex h-[72px] w-[65%] items-center justify-around rounded-lg border-[1.5px] border-transparent bg-white px-[2%] drop-shadow hover:border-[1.5px] hover:border-[#7C5DFA]"
     >
-      <h3 className="first-letter:text-grey">#{invoice.id}</h3>
-      <h2>Due {invoice.paymentDue}</h2>
-      <h2>{invoice.clientName}</h2>
-      <h4>£ {invoice.total}</h4>
-      <div className="flex items-center gap-5">
+      <h3 className="basis-2/12">
+        <span className="font-bold text-grey">#</span>
+        {invoice.id}
+      </h3>
+      <h2 className="basis-2/12">Due {invoice.paymentDue}</h2>
+      <h2 className="basis-2/12">{invoice.clientName}</h2>
+      <h4 className="basis-2/12">£ {invoice.total}</h4>
+      <div className="flex basis-2/12 items-center gap-5">
         <Status status={invoice.status ?? "draft"} />
         <img
           className="h-2.5"
