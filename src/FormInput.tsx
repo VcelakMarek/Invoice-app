@@ -25,6 +25,7 @@ const FormInput = ({
   inputType = "text",
   selectValues,
   withHeading = true,
+  pending,
 }: Props) => {
   if (inputType === "select") {
     return (
@@ -43,13 +44,18 @@ const FormInput = ({
     return (
       <label htmlFor={id}>
         {withHeading && <h2>{inputName}</h2>}
-        <Field
-          name={id}
-          className={inputSize[size]}
-          type={inputType}
-          component="input"
-          id={id}
-        />
+        <Field name={id}>
+          {({ input, meta }) => (
+            <div>
+              <input {...input} type={inputType} className={inputSize[size]} />
+              {pending
+                ? meta &&
+                  meta.error &&
+                  meta.touched && <span>{meta.error}</span>
+                : null}
+            </div>
+          )}
+        </Field>
       </label>
     );
   }
