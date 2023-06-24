@@ -15,9 +15,12 @@ h4 {
 h5 {
   @apply mt-10 text-xs font-bold text-purple;
 }
-input,
+input[type="text"],
+[type="date"],
+[type="email"],
+[type="number"],
 select {
-  @apply mt-2.5 mb-5 h-[48px] rounded-md border px-5 text-sm font-bold text-black outline-purple active:border-purple;
+  @apply mt-2.5 mb-5 h-12 rounded-md border px-5 text-sm font-bold text-black outline-purple active:border-purple;
 }
 input[type="checkbox"] {
   @apply cursor-pointer appearance-none rounded-[2px] border-[px] border-transparent bg-light-grey text-purple hover:border-purple focus:ring-transparent;
@@ -28,6 +31,10 @@ input[type="checkbox"] {
 
 @tailwind components;
 @tailwind utilities;
+input,
+select {
+  @apply mt-2.5 mb-5 h-12 rounded-md border px-5 text-sm font-bold text-black outline-purple active:border-purple;
+}
 
 :root {
   --purple: #7c5dfa;
