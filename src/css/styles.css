@@ -20,13 +20,30 @@ input[type="text"],
 [type="email"],
 [type="number"],
 select {
-  @apply mt-2.5 mb-5 h-12 rounded-md border px-5 text-sm font-bold text-black outline-purple active:border-purple;
+  @apply mt-2.5 mb-5 h-12 rounded-md border border-light-grey px-5 text-sm font-bold text-black outline-purple active:border-purple;
 }
 input[type="checkbox"] {
   @apply cursor-pointer appearance-none rounded-[2px] border-[px] border-transparent bg-light-grey text-purple hover:border-purple focus:ring-transparent;
 }
 [type="checkbox"]:checked {
   @apply bg-[url("/Invoice_app/assets/icon-check.svg")];
+}
+
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--light-grey);
+  border-radius: 14px;
+  width: 8px;
+  height: 112px;
+  border: 3px solid white;
 }
 
 @tailwind components;
