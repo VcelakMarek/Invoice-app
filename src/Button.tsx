@@ -12,6 +12,7 @@ type Props = {
   disabled?: boolean;
   isOpen?: boolean;
   submit?: boolean;
+  full?: boolean;
 };
 
 const backgroundColor = {
@@ -41,10 +42,11 @@ const Button = ({
   disabled,
   isOpen,
   submit,
+  full,
 }: Props) => {
   const border = !dropDown && "rounded-full";
   const dimensions = !icon
-    ? `h-12 ${invoice ? "pl-2" : "pl-6"} pr-6`
+    ? `h-12 ${invoice ? "pl-2" : "pl-6"} pr-6 ${full ? "w-full" : null}`
     : " pl-5 pb-2";
   const text = "font-bold text-xs tracking-[1px]";
   const flex = "flex items-center gap-4";
