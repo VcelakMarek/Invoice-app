@@ -89,7 +89,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
   return (
     <Modal>
       <div className="absolute z-10 h-screen w-screen bg-neutral-900/40">
-        <div className="fixed h-screen w-[719px] overflow-auto bg-white pb-28 pl-40 pt-14 pr-14">
+        <div className="fixed h-screen w-[719px] overflow-auto bg-white pb-28 pl-40 pt-14 pr-10">
           <h1>New Invoice</h1>
           <Form
             id="newInvoice"
