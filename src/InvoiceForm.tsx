@@ -201,6 +201,8 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
                               ))
                             : null}
                           <Button
+                            color="grey"
+                            full
                             onClick={() => fields.push(createEmptyItem())}
                           >
                             + Add New Item
