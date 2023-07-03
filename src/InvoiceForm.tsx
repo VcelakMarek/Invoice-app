@@ -20,7 +20,7 @@ type InvoiceFormProps = {
   form: FormApi<FormData>;
 };
 
-const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
+const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
   const { invoices, setInvoices } = useContext(InvoicesContext);
 
   const createEmptyItem = () => ({
@@ -30,25 +30,10 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
     total: "",
   });
 
-  const onSubmit = (values: FormData, form: FormApi<FormData>) => {
+  const onSubmit = (values: FormData) => {
     console.log("FormValues", values);
 
-    form.submit();
     const id = generateId(invoices);
-
-    // // if (status === "pending") {
-    //   const errors = validate()
-    //   if (errors) {
-    //     break
-    //     display error
-    //   }
-    //   else
-    //   create new pending invoice
-    // }
-    // else
-    // {
-    //   create new draft invoice
-    // }
 
     const createdInvoice = {
       id: id,
@@ -71,20 +56,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
     };
     console.log("createdInovice", createdInvoice);
     setInvoices((prev) => [...prev, createdInvoice] as InvoiceTypes[]);
-
-    // isValidated(values);
   };
-
-  // const isValidated = async (values) => {
-  //   const errors = await validate(values);
-  //   if (!errors && Object.keys(values).length > 0) {
-  //     // Handle validation errors
-  //     console.log("Validation errors:", errors);
-  //   } else {
-  //     // Proceed with form submission
-  //     console.log("Form submitted successfully");
-  //   }
-  // };
 
   return (
     <Modal>
@@ -102,10 +74,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
               <form onSubmit={handleSubmit}>
                 <h5 className="mb-4">Bill From</h5>
 
-                <FormInput
-                  inputName="Street Address"
-                  id="fromStreetAddress" /*pending={inv}*/
-                />
+                <FormInput inputName="Street Address" id="fromStreetAddress" />
 
                 <div className="flex justify-between">
                   <FormInput inputName="City" size="l" id="fromCity" />
@@ -220,9 +189,12 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
                   <div className="flex gap-2">
                     <Button
                       color="darkBlue"
-                      submit
                       onClick={() => {
+                        if (!form.isValidationPaused()) {
+                          form.pauseValidation();
+                        }
                         form.change("status", "draft");
+                        form.submit();
                       }}
                     >
                       Save as Draft
@@ -232,7 +204,10 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, form }) => {
                       submit
                       onClick={() => {
                         form.change("status", "pending");
-                        onSubmit(form.getState().values, form);
+                        if (form.isValidationPaused()) {
+                          form.resumeValidation();
+                        }
+                        // onCloseModal;
                       }}
                     >
                       Save & Send
