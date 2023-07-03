@@ -43,16 +43,24 @@ const FormInput = ({
   } else {
     return (
       <label htmlFor={id}>
-        {withHeading && <h2>{inputName}</h2>}
         <Field name={id}>
           {({ input, meta }) => (
             <div>
-              <input {...input} type={inputType} className={inputSize[size]} />
-              {pending
-                ? meta &&
-                  meta.error &&
-                  meta.touched && <span>{meta.error}</span>
-                : null}
+              <div className="flex justify-between">
+                {withHeading && (
+                  <h2 className={meta.error ? "text-red" : ""}>{inputName}</h2>
+                )}
+                {meta && meta.error && meta.touched && (
+                  <span className="text-[10px] text-red">{meta.error}</span>
+                )}
+              </div>
+              <input
+                {...input}
+                type={inputType}
+                className={`${inputSize[size]} ${
+                  meta.error ? "border-red" : ""
+                } `}
+              />
             </div>
           )}
         </Field>
