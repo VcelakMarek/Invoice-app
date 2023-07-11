@@ -25,7 +25,6 @@ const FormInput = ({
   inputType = "text",
   selectValues,
   withHeading = true,
-  pending,
 }: Props) => {
   if (inputType === "select") {
     return (
