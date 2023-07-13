@@ -1,16 +1,18 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InvoicesContext } from "./Invoices.context";
 import Button from "./Button";
 import Invoice from "./Invoice";
 import Status from "./Status";
 import type { InvoiceTypes } from "./types/invoiceTypes";
+import InvoiceForm from "./InvoiceForm";
 
 const Details = () => {
   const location = useLocation();
   const { invoiceData } = location.state;
   const navigate = useNavigate();
   const { invoices, setInvoices } = useContext(InvoicesContext);
+  const [showModal, setShowModal] = useState(false);
 
   const deleteInvoice = () => {
     setInvoices((current: InvoiceTypes[]) =>
@@ -45,7 +47,13 @@ const Details = () => {
           <Status status={invoiceData.status}></Status>
         </div>
         <div className="flex gap-2">
-          <Button color="grey" disabled={invoiceData.status === "paid"}>
+          <Button
+            color="grey"
+            disabled={invoiceData.status === "paid"}
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
             Edit
           </Button>
           <Button
@@ -71,6 +79,16 @@ const Details = () => {
         </div>
       </div>
       <Invoice details invoice={invoiceData} />
+
+      {showModal && (
+        <InvoiceForm
+          invoiceValues={invoiceData}
+          onCloseModal={(e: React.MouseEvent<HTMLButtonElement>): void => {
+            e.preventDefault();
+            setShowModal(false);
+          }}
+        />
+      )}
     </div>
   );
 };
