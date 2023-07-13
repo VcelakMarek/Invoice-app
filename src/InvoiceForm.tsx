@@ -20,7 +20,7 @@ type InvoiceFormProps = {
   form: FormApi<FormData>;
 };
 
-const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
+const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
   const { invoices, setInvoices } = useContext(InvoicesContext);
 
   const createEmptyItem = () => ({
@@ -56,19 +56,62 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
     };
     console.log("createdInovice", createdInvoice);
     setInvoices((prev) => [...prev, createdInvoice] as InvoiceTypes[]);
+
+    if (invoiceValues) {
+      console.log(
+        "EDITED INVOICE",
+        invoices.find((invoice) => invoice.id === invoiceValues.id)
+      );
+      const editedInvoice = invoices.find(
+        (invoice) => invoice.id === invoiceValues.id
+      );
+    }
   };
+
+  let initialValues;
+  if (invoiceValues) {
+    initialValues = {
+      ...invoiceValues,
+      toClientsName: invoiceValues.clientName,
+      toClientsEmail: invoiceValues.clientEmail,
+      fromStreetAddress: invoiceValues.senderAddress.street,
+      fromCity: invoiceValues.senderAddress.city,
+      fromPostCode: invoiceValues.senderAddress.postCode,
+      fromCountry: invoiceValues.senderAddress.country,
+      toStreetAddress: invoiceValues.clientAddress.street,
+      toCity: invoiceValues.clientAddress.city,
+      toPostCode: invoiceValues.clientAddress.postCode,
+      toCountry: invoiceValues.clientAddress.country,
+    };
+  }
 
   return (
     <Modal>
       <div className="absolute z-10 h-screen w-screen bg-neutral-900/40">
         <div className="fixed h-screen w-[719px] overflow-auto bg-white pb-28 pl-40 pt-14 pr-10">
-          <h1>New Invoice</h1>
+          <h1>
+            {invoiceValues ? (
+              <>
+                Edit
+                <span className="font-bold text-grey"> #</span>
+                {initialValues.id}
+              </>
+            ) : (
+              "New Invoice"
+            )}
+          </h1>
+
           <Form
             id="newInvoice"
             className="w-[504px]"
             onSubmit={onSubmit}
             validate={validate}
-            initialValues={{ items: [createEmptyItem()] }}
+            initialValues={
+              invoiceValues
+                ? { ...initialValues }
+                : { items: [createEmptyItem()] }
+            }
+            // items: [createEmptyItem()] }}
             mutators={{ ...arrayMutators }}
             render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit}>
@@ -107,6 +150,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal }) => {
                     size="xl"
                     inputType="select"
                     selectValues={[
+                      ["Select Term", 0],
                       ["Net 1 Day", 1],
                       ["Net 7 Days", 7],
                       ["Net 14 Days", 14],
