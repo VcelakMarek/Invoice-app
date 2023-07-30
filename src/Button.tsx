@@ -13,6 +13,7 @@ type Props = {
   isOpen?: boolean;
   submit?: boolean;
   full?: boolean;
+  invisible?: boolean;
 };
 
 const backgroundColor = {
@@ -43,6 +44,7 @@ const Button = ({
   isOpen,
   submit,
   full,
+  invisible,
 }: Props) => {
   const border = !dropDown && "rounded-full";
   const dimensions = !icon
@@ -57,6 +59,7 @@ const Button = ({
     border,
     dimensions,
     text,
+    invisible ? "invisible" : null,
   ];
 
   const dropDownClasses = [text, flex];
