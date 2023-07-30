@@ -25,6 +25,7 @@ const FormInput = ({
   inputType = "text",
   selectValues,
   withHeading = true,
+  inputOnChange,
 }: Props) => {
   if (inputType === "select") {
     return (
@@ -56,6 +57,7 @@ const FormInput = ({
               <input
                 {...input}
                 type={inputType}
+                onChange={inputOnChange}
                 className={`${inputSize[size]} ${
                   meta.error ? "border-red" : ""
                 } `}
