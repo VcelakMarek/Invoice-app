@@ -27,7 +27,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
     name: "",
     quantity: 0,
     price: "",
-    total: "",
+    total: 0,
   });
 
   const onSubmit = (values: FormData) => {
@@ -58,13 +58,10 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
     setInvoices((prev) => [...prev, createdInvoice] as InvoiceTypes[]);
 
     if (invoiceValues) {
-      console.log(
-        "EDITED INVOICE",
-        invoices.find((invoice) => invoice.id === invoiceValues.id)
+      const editedInvoices = invoices.map((invoice: InvoiceTypes) =>
+        invoice.id === createdInvoice.id ? createdInvoice : invoice
       );
-      const editedInvoice = invoices.find(
-        (invoice) => invoice.id === invoiceValues.id
-      );
+      setInvoices(editedInvoices);
     }
   };
 
@@ -111,7 +108,6 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                 ? { ...initialValues }
                 : { items: [createEmptyItem()] }
             }
-            // items: [createEmptyItem()] }}
             mutators={{ ...arrayMutators }}
             render={({ handleSubmit, values, form }) => (
               <form onSubmit={handleSubmit}>
@@ -197,10 +193,13 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                                     withHeading={false}
                                     inputType="number"
                                     id={`items[${index}].price`}
+                                    inputOnChange={console.log("debil")}
                                   />
+
                                   <p className="px-1 pb-1 text-sm font-bold text-grey">
-                                    £ {value.quantity * value.price}
+                                    {value.total}
                                   </p>
+
                                   <Button
                                     icon
                                     onClick={() => fields.remove(index)}
@@ -226,23 +225,32 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                   </div>
                 </div>
 
-                <div className="fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center justify-around bg-white shadow-inner shadow-slate-900">
+                <div
+                  className={`
+                    shadow-slate-900" fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center bg-white shadow-inner
+                  
+                  ${
+                    invoiceValues ? "justify-end gap-2 pr-14" : "justify-around"
+                  }`}
+                >
                   <Button color="grey" onClick={onCloseModal}>
-                    Discard
+                    {invoiceValues ? "Cancel" : "Discard"}
                   </Button>
                   <div className="flex gap-2">
-                    <Button
-                      color="darkBlue"
-                      onClick={() => {
-                        if (!form.isValidationPaused()) {
-                          form.pauseValidation();
-                        }
-                        form.change("status", "draft");
-                        form.submit();
-                      }}
-                    >
-                      Save as Draft
-                    </Button>
+                    {!invoiceValues && (
+                      <Button
+                        color="darkBlue"
+                        onClick={() => {
+                          if (!form.isValidationPaused()) {
+                            form.pauseValidation();
+                          }
+                          form.change("status", "draft");
+                          form.submit();
+                        }}
+                      >
+                        Save as Draft
+                      </Button>
+                    )}
                     <Button
                       color="purple"
                       submit
@@ -254,7 +262,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                         // onCloseModal;
                       }}
                     >
-                      Save & Send
+                      {invoiceValues ? "Save Changes" : "Save & Send"}
                     </Button>
                   </div>
                 </div>
