@@ -26,7 +26,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
   const createEmptyItem = () => ({
     name: "",
     quantity: 0,
-    price: "",
+    price: 0,
     total: 0,
   });
 
@@ -35,10 +35,23 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
 
     const id = generateId(invoices);
 
+    const countTotal = values.items.reduce((total, item) => {
+      return total + item.total;
+    }, 0);
+
+    const countPaymentDue = (currentDate, daysToAdd) => {
+      const originalDate = new Date(currentDate);
+      const newDate = new Date(
+        originalDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000
+      );
+      const formattedNewDate = newDate.toISOString().split("T")[0];
+      return formattedNewDate;
+    };
+
     const createdInvoice = {
       id: id,
       ...values,
-      paymentDue: "",
+      paymentDue: countPaymentDue(values.createdAt, values.paymentTerms),
       clientName: values.toClientsName,
       clientEmail: values.toClientsEmail,
       senderAddress: {
@@ -53,7 +66,9 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
         postCode: values.toPostCode,
         country: values.toCountry,
       },
+      total: countTotal,
     };
+
     console.log("createdInovice", createdInvoice);
     setInvoices((prev) => [...prev, createdInvoice] as InvoiceTypes[]);
 
@@ -186,6 +201,10 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                                     withHeading={false}
                                     inputType="number"
                                     id={`items[${index}].quantity`}
+                                    onChange={
+                                      (value.total =
+                                        value.price * value.quantity)
+                                    }
                                   />
                                   <FormInput
                                     size="s"
@@ -193,7 +212,10 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                                     withHeading={false}
                                     inputType="number"
                                     id={`items[${index}].price`}
-                                    inputOnChange={console.log("debil")}
+                                    onChange={
+                                      (value.total =
+                                        value.price * value.quantity)
+                                    }
                                   />
 
                                   <p className="px-1 pb-1 text-sm font-bold text-grey">
