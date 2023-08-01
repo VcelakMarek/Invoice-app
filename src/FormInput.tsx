@@ -25,7 +25,6 @@ const FormInput = ({
   inputType = "text",
   selectValues,
   withHeading = true,
-  inputOnChange,
 }: Props) => {
   if (inputType === "select") {
     return (
@@ -44,7 +43,7 @@ const FormInput = ({
     return (
       <label htmlFor={id}>
         <Field name={id}>
-          {({ input, meta }) => (
+          {({ input, meta, onChange }) => (
             <div>
               <div className="flex justify-between">
                 {withHeading && (
@@ -57,10 +56,16 @@ const FormInput = ({
               <input
                 {...input}
                 type={inputType}
-                onChange={inputOnChange}
                 className={`${inputSize[size]} ${
                   meta.error ? "border-red" : ""
                 } `}
+                onChange={(e) => {
+                  input.onChange(e); //final-form's onChange
+                  if (onChange) {
+                    //props.onChange
+                    onChange(e);
+                  }
+                }}
               />
             </div>
           )}
