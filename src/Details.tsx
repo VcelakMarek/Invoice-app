@@ -49,7 +49,7 @@ const Details = () => {
         <div className="flex gap-2">
           <Button
             color="grey"
-            disabled={invoiceData.status === "paid"}
+            invisible={invoiceData.status != "draft"}
             onClick={() => {
               setShowModal(true);
             }}
