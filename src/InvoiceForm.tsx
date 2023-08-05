@@ -39,19 +39,25 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
       return total + item.total;
     }, 0);
 
-    const countPaymentDue = (currentDate, daysToAdd) => {
-      const originalDate = new Date(currentDate);
-      const newDate = new Date(
-        originalDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000
-      );
-      const formattedNewDate = newDate.toISOString().split("T")[0];
-      return formattedNewDate;
+    const countPaymentDue = (currentDate, daysToAdd, status) => {
+      if (status === "pending") {
+        const originalDate = new Date(currentDate);
+        const newDate = new Date(
+          originalDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000
+        );
+        const formattedNewDate = newDate.toISOString().split("T")[0];
+        return formattedNewDate;
+      }
     };
 
     const createdInvoice = {
       id: id,
       ...values,
-      paymentDue: countPaymentDue(values.createdAt, values.paymentTerms),
+      paymentDue: countPaymentDue(
+        values.createdAt,
+        values.paymentTerms,
+        values.status
+      ),
       clientName: values.toClientsName,
       clientEmail: values.toClientsEmail,
       senderAddress: {
@@ -262,7 +268,8 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                     {!invoiceValues && (
                       <Button
                         color="darkBlue"
-                        onClick={() => {
+                        onClick={(e) => {
+                          onCloseModal(e);
                           if (!form.isValidationPaused()) {
                             form.pauseValidation();
                           }
