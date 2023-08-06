@@ -29,6 +29,10 @@ input[type="checkbox"] {
   @apply bg-[url("/Invoice_app/assets/icon-check.svg")];
 }
 
+button {
+  @apply disabled:opacity-10;
+}
+
 *::-webkit-scrollbar {
   width: 15px;
 }
