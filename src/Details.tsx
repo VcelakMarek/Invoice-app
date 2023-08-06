@@ -71,7 +71,7 @@ const Details = () => {
               markAsPaid();
             }}
             disabled={
-              invoiceData.status === "paid" || invoiceData.draft === "draft"
+              invoiceData.status === "paid" || invoiceData.status === "draft"
             }
           >
             Mark as Paid
@@ -84,7 +84,6 @@ const Details = () => {
         <InvoiceForm
           invoiceValues={invoiceData}
           onCloseModal={(e: React.MouseEvent<HTMLButtonElement>): void => {
-            e.preventDefault();
             setShowModal(false);
           }}
         />
