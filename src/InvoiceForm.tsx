@@ -30,7 +30,10 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
     total: 0,
   });
 
-  const onSubmit = (values: FormData) => {
+  const onSubmit = (
+    values: FormData,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     console.log("FormValues", values);
 
     const id = generateId(invoices);
@@ -84,6 +87,9 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
       );
       setInvoices(editedInvoices);
     }
+
+    onCloseModal(e);
+    console.log("form added");
   };
 
   let initialValues;
@@ -268,8 +274,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                     {!invoiceValues && (
                       <Button
                         color="darkBlue"
-                        onClick={(e) => {
-                          onCloseModal(e);
+                        onClick={() => {
                           if (!form.isValidationPaused()) {
                             form.pauseValidation();
                           }
@@ -288,7 +293,6 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                         if (form.isValidationPaused()) {
                           form.resumeValidation();
                         }
-                        // onCloseModal;
                       }}
                     >
                       {invoiceValues ? "Save Changes" : "Save & Send"}
