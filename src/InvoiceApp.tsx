@@ -84,7 +84,6 @@ const InvoiceApp = () => {
         {showModal && (
           <InvoiceForm
             onCloseModal={(e: React.MouseEvent<HTMLButtonElement>): void => {
-              e.preventDefault();
               setShowModal(false);
             }}
           />
