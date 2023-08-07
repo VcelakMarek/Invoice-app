@@ -22,12 +22,12 @@ const Details = () => {
 
   const markAsPaid = () => {
     setInvoices(
-      invoices.map((obj) => {
-        if (obj.id === invoiceData.id) {
+      invoices.map(({ invoice }: InvoiceTypes) => {
+        if (invoice.id === invoiceData.id) {
           invoiceData.status = "paid";
-          return { ...obj, status: "paid" };
+          return { ...invoice, status: "paid" };
         } else {
-          return obj;
+          return invoice;
         }
       })
     );
@@ -83,7 +83,7 @@ const Details = () => {
       {showModal && (
         <InvoiceForm
           invoiceValues={invoiceData}
-          onCloseModal={(e: React.MouseEvent<HTMLButtonElement>): void => {
+          onCloseModal={() => {
             setShowModal(false);
           }}
         />

@@ -16,8 +16,8 @@ type FormData = {
 };
 
 type InvoiceFormProps = {
-  onCloseModal: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  form: FormApi<FormData>;
+  onCloseModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  form?: FormApi<FormData>;
 };
 
 const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
