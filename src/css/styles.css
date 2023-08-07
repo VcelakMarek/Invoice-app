@@ -15,6 +15,9 @@ h4 {
 h5 {
   @apply mt-10 text-xs font-bold text-purple;
 }
+h6 {
+  @apply text-xl font-medium text-light-blue;
+}
 input[type="text"],
 [type="date"],
 [type="email"],
