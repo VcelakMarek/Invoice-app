@@ -112,7 +112,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
   return (
     <Modal>
       <div className="absolute z-10 h-screen w-screen bg-neutral-900/40">
-        <div className="fixed h-screen w-[719px] overflow-auto bg-white pb-28 pl-40 pt-14 pr-10">
+        <div className="fixed h-screen w-[719px] overflow-auto bg-gradient-to-b from-white via-white to-light-bg pb-36 pl-40 pt-14 pr-10">
           <h1>
             {invoiceValues ? (
               <>
@@ -185,10 +185,11 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
 
                 <div>
                   <div className="m-auto rounded-t-lg">
-                    <div className="flex justify-between gap-3">
-                      <h2 className="mr-36">Item Name</h2>
-                      <h2>QTY</h2>
-                      <h2>Price</h2>
+                    <h6>Item List</h6>
+                    <div className="flex gap-[25px]">
+                      <h2 className="w-[214px]">Item Name</h2>
+                      <h2 className="w-[46px]">Qty.</h2>
+                      <h2 className="w-[100px]">Price</h2>
                       <h2>Total</h2>
                     </div>
                     <FieldArray
@@ -261,8 +262,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
 
                 <div
                   className={`
-                    shadow-slate-900" fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center bg-white shadow-inner
-                  
+                  fixed bottom-0 left-[103px] flex h-28 w-[616px] items-center rounded-tr-[20px] bg-white
                   ${
                     invoiceValues ? "justify-end gap-2 pr-14" : "justify-around"
                   }`}
