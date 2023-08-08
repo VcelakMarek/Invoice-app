@@ -20,6 +20,12 @@ const InvoiceApp = () => {
   const OPTIONS = ["draft", "pending", "paid"];
 
   useEffect(() => {
+    document.body.className = showModal
+      ? "overflow-hidden"
+      : "overflow-visible";
+  }, [showModal]);
+
+  useEffect(() => {
     if (!invoices.length) {
       fetchOnLoadData(setInvoices);
     }
