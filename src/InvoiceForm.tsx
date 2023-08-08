@@ -10,6 +10,7 @@ import type { InvoiceTypes } from "types/invoiceTypes";
 import { InvoicesContext } from "./Invoices.context";
 import generateId from "./generateId";
 import validate from "./validation";
+import { saveToLocalStorage } from "./localStorage";
 
 type FormData = {
   [key: string]: InvoiceTypes[];
@@ -85,11 +86,11 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
       const editedInvoices = invoices.map((invoice: InvoiceTypes) =>
         invoice.id === createdInvoice.id ? createdInvoice : invoice
       );
+      saveToLocalStorage(editedInvoices);
       setInvoices(editedInvoices);
     }
 
     onCloseModal(e);
-    console.log("form added");
   };
 
   let initialValues;

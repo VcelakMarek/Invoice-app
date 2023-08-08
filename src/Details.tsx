@@ -6,6 +6,7 @@ import Invoice from "./Invoice";
 import Status from "./Status";
 import type { InvoiceTypes } from "./types/invoiceTypes";
 import InvoiceForm from "./InvoiceForm";
+import { saveToLocalStorage } from "./localStorage";
 
 const Details = () => {
   const location = useLocation();
@@ -15,9 +16,10 @@ const Details = () => {
   const [showModal, setShowModal] = useState(false);
 
   const deleteInvoice = () => {
-    setInvoices((current: InvoiceTypes[]) =>
-      current.filter((invoice) => invoice.id !== invoiceData.id)
+    const invoicesAfterDelete = invoices.filter(
+      (invoice) => invoice.id !== invoiceData.id
     );
+    saveToLocalStorage(invoicesAfterDelete);
   };
 
   const markAsPaid = () => {
@@ -25,13 +27,13 @@ const Details = () => {
       invoices.map((invoice) => {
         if (invoice.id === invoiceData.id) {
           invoiceData.status = "paid";
-          return { ...invoice, status: "paid" };
+          return { ...invoice };
         } else {
           return invoice;
         }
       })
     );
-    localStorage.setItem("invoices", JSON.stringify(invoices));
+    saveToLocalStorage(invoices);
   };
 
   return (

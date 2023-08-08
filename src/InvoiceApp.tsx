@@ -7,6 +7,7 @@ import InvoiceForm from "./InvoiceForm";
 import type { CheckedStatuses } from "types/dropDownMenuTypes";
 import type { InvoiceTypes } from "types/invoiceTypes";
 import DropDownMenu from "./DropDownMenu";
+import { loadFromLocalStorage, saveToLocalStorage } from "./localStorage";
 
 const InvoiceApp = () => {
   const { invoices, setInvoices } = useContext(InvoicesContext);
@@ -27,15 +28,14 @@ const InvoiceApp = () => {
 
   useEffect(() => {
     if (localStorage.getItem("invoices")) {
-      const localStorageDate = JSON.parse(localStorage.getItem("invoices"));
-      setInvoices(localStorageDate);
+      loadFromLocalStorage(setInvoices);
     } else if (!invoices.length) {
       fetchOnLoadData(setInvoices);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("invoices", JSON.stringify(invoices));
+    saveToLocalStorage(invoices);
   }, [invoices]);
 
   useEffect(() => {
