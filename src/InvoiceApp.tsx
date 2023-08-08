@@ -93,6 +93,22 @@ const InvoiceApp = () => {
             : invoices.map((invoice) => (
                 <Invoice invoice={invoice} key={invoice.id} />
               ))}
+
+          {invoices.length === 0 && (
+            <div className="flex flex-col items-center justify-center gap-2">
+              <img
+                src="/Invoice_app/assets/illustration-empty.svg"
+                alt="illustration empty"
+              />
+              <h4>There is nothing here</h4>
+              <h2 className="text-center">
+                {" "}
+                Create an invoice by clicking the{" "}
+                <span className="text-sm">New Invoice</span> button and get
+                started
+              </h2>
+            </div>
+          )}
         </div>
         {showModal && (
           <InvoiceForm
