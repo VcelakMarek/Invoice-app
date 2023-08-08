@@ -22,7 +22,7 @@ const Details = () => {
 
   const markAsPaid = () => {
     setInvoices(
-      invoices.map(({ invoice }: InvoiceTypes) => {
+      invoices.map((invoice) => {
         if (invoice.id === invoiceData.id) {
           invoiceData.status = "paid";
           return { ...invoice, status: "paid" };
@@ -31,6 +31,7 @@ const Details = () => {
         }
       })
     );
+    localStorage.setItem("invoices", JSON.stringify(invoices));
   };
 
   return (

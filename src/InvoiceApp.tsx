@@ -26,10 +26,17 @@ const InvoiceApp = () => {
   }, [showModal]);
 
   useEffect(() => {
-    if (!invoices.length) {
+    if (localStorage.getItem("invoices")) {
+      const localStorageDate = JSON.parse(localStorage.getItem("invoices"));
+      setInvoices(localStorageDate);
+    } else if (!invoices.length) {
       fetchOnLoadData(setInvoices);
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("invoices", JSON.stringify(invoices));
+  }, [invoices]);
 
   useEffect(() => {
     const trueValues = Object.keys(checkedStatuses).filter(
