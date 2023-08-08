@@ -60,7 +60,7 @@ const Invoice = ({ details, invoice }: Props) => {
 
   return (
     <Link
-      to={`/details/${invoice.id}`}
+      to={`/Invoice_app/details/${invoice.id}`}
       state={{ invoiceData: invoice }}
       className="mb-4 flex h-[72px] w-[65%] items-center justify-around rounded-lg border-[1.5px] border-transparent bg-white px-[2%] drop-shadow hover:border-[1.5px] hover:border-[#7C5DFA]"
     >

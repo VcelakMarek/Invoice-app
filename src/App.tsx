@@ -36,7 +36,7 @@ const App = () => {
         <InvoicesProvider>
           <Routes>
             <Route path="/Invoice_app/" element={<InvoiceApp />} />
-            <Route path="/details/:id" element={<Details />} />
+            <Route path="/Invoice_app/details/:id" element={<Details />} />
           </Routes>
         </InvoicesProvider>
       </div>
