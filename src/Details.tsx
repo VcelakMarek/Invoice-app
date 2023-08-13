@@ -1,19 +1,19 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InvoicesContext } from "./Invoices.context";
 import Button from "./Button";
 import Invoice from "./Invoice";
 import Status from "./Status";
-import type { InvoiceTypes } from "./types/invoiceTypes";
 import InvoiceForm from "./InvoiceForm";
 import { saveToLocalStorage } from "./localStorage";
 
 const Details = () => {
   const location = useLocation();
-  const { invoiceData } = location.state;
+  const { loadedInvoiceData } = location.state;
   const navigate = useNavigate();
   const { invoices, setInvoices } = useContext(InvoicesContext);
   const [showModal, setShowModal] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(loadedInvoiceData);
 
   const deleteInvoice = () => {
     const invoicesAfterDelete = invoices.filter(
@@ -21,6 +21,13 @@ const Details = () => {
     );
     saveToLocalStorage(invoicesAfterDelete);
   };
+
+  useEffect(() => {
+    invoices.map((invoice) => {
+      invoice.id === invoiceData.id ? setInvoiceData(invoice) : null;
+      console.log(invoiceData.id);
+    });
+  }, [invoices]);
 
   const markAsPaid = () => {
     setInvoices(
