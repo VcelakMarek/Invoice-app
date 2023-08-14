@@ -12,7 +12,7 @@ const App = () => {
           <div className="relative z-20 h-[103px] w-[103px] rounded-tr-[20px] rounded-br-[20px] bg-purple">
             <img
               className="absolute top-8 left-8 z-40 w-10"
-              src="/Invoice_app/assets/logo.svg"
+              src="/Invoice_app/logo.svg"
               alt="logo"
             />
             <div className="absolute top-1/2 z-30 h-[51px] w-full rounded-tl-[20px] rounded-br-[20px] bg-purple-hover"></div>
@@ -21,14 +21,14 @@ const App = () => {
           <div className="grid h-[167px] place-items-center">
             <img
               className="pointer w-5 cursor-pointer hover:text-light-grey"
-              src="/Invoice_app/assets/icon-moon.svg"
+              src="/Invoice_app/icon-moon.svg"
               alt="icon-moon"
             />
             {/* <img src="/Invoice_app/assets/icon-sun.svg" alt="icon-sun" /> */}
             <div className="h-[1px] w-full bg-light-blue"></div>
             <img
               className="mb-3 w-10 rounded-full"
-              src="/Invoice_app/assets/image-avatar.jpg"
+              src="/Invoice_app/image-avatar.jpg"
               alt="avatar"
             />
           </div>

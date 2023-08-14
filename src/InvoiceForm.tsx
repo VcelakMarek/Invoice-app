@@ -241,7 +241,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({ onCloseModal, invoiceValues }) => {
                                     onClick={() => fields.remove(index)}
                                   >
                                     <img
-                                      src="/Invoice_app/assets/icon-delete.svg"
+                                      src="/Invoice_app/icon-delete.svg"
                                       alt="delete-icon"
                                     />
                                   </Button>

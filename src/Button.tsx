@@ -71,7 +71,7 @@ const Button = ({
         {children}
         <img
           className={isOpen ? "rotate-180 duration-500" : "duration-500"}
-          src="/Invoice_app/assets/icon-arrow-down.svg"
+          src="/Invoice_app/icon-arrow-down.svg"
           alt="arrow-down"
         ></img>
       </button>
@@ -84,7 +84,7 @@ const Button = ({
         <div className="grid h-8 w-8 place-items-center rounded-full bg-white">
           <img
             className="pl-px pt-px"
-            src="/Invoice_app/assets/icon-plus.svg"
+            src="/Invoice_app/icon-plus.svg"
             alt="plus"
           />
         </div>
@@ -97,7 +97,7 @@ const Button = ({
     return (
       <button className="mb-6 flex justify-between gap-5" onClick={onClick}>
         <img
-          src="/Invoice_app/assets/icon-arrow-left.svg"
+          src="/Invoice_app/icon-arrow-left.svg"
           alt="go back"
           className="m-auto h-2"
         />

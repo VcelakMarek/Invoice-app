@@ -97,7 +97,7 @@ const InvoiceApp = () => {
           {invoices.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-2">
               <img
-                src="/Invoice_app/assets/illustration-empty.svg"
+                src="/Invoice_app/illustration-empty.svg"
                 alt="illustration empty"
               />
               <h4>There is nothing here</h4>

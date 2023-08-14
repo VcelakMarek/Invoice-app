@@ -75,7 +75,7 @@ const Invoice = ({ details, invoice }: Props) => {
         <Status status={invoice.status ?? "draft"} />
         <img
           className="h-2.5"
-          src="/Invoice_app/assets/icon-arrow-right.svg"
+          src="/Invoice_app/icon-arrow-right.svg"
           alt="arrow-right"
         />
       </div>
